@@ -46,7 +46,10 @@
     TIME:
     <input id="lblTime" type="text"/>
     <br/>
+    <input type="button" value="new-game" onclick="Start()">
+    <br/>
     <canvas id="canvas" height="600" width="600"></canvas>
+
 </div>
 
 <div id="welcome" style="visibility: visible;">
@@ -95,13 +98,13 @@
 
 <div id="setting" style="visibility: hidden;">
     <h4>move up controll: </h4>
-    <input id="move_up" type="text" onkeydown="saveUp(event)">
+    <input id="move_up" type="text">
     <h4>move down controll: </h4>
-    <input id="move_down" type="text" onkeydown="saveDown(event)">
+    <input id="move_down" type="text">
     <h4>move right controll: </h4>
-    <input id="move_right" type="text" onkeydown="saveRight(event)">
+    <input id="move_right" type="text">
     <h4>move left controll:</h4>
-    <input id="move_left" type="text" onkeydown="saveLeft(event)">
+    <input id="move_left" type="text">
     <h4>number of balls: (between 50 to 90) </h4>
     <input id="num_of_balls" type="text">
     <h4>color of 25 ball: </h4>
@@ -110,11 +113,8 @@
     <input id="color_15_ball" type="text">
     <h4>color of 5 ball: </h4>
     <input id="color_5_ball" type="text">
-    <script>
-    balls_number = document.getElementById('num_of_balls').value;
-    </script>
     <input type="button" value="Random" onclick="random()">
-    <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,
+    <input type="button" value="Done" onclick="CheckSettings(document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,document.getElementById('num_of_balls').value,
     document.getElementById('color_25_ball').value,document.getElementById('color_15_ball').value,
     document.getElementById('color_5_ball').value)">
 </div>
@@ -128,8 +128,11 @@
     var ball_25;
     var ball_15;
     var ball_5;
+    var c_up;
+    var c_down;
+    var c_right;
+    var c_left;
     var number_of_eating;
-    var number_of_lives;
     var balls_number;
     var win_score;
     var pac_color;
@@ -137,14 +140,8 @@
     var time_elapsed;
     var interval;
     var users;
-    var sound;
-    var up;
-    var down;
-    var left;
-    var right;
-
-    //This is a test
-    //this is a test from branch loren
+    var playSound;
+    var endSound;
 
     class User{
         constructor(username,password,fName,lName,email,bDate) {
@@ -156,6 +153,23 @@
             this.bDate = bDate;
         }
     }
+    class sound{
+        constructor(src) {
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            this.sound.style.display = "none";
+            document.body.appendChild(this.sound);
+            this.play = function(){
+                this.sound.play();
+            }
+            this.stop = function(){
+                this.sound.pause();
+            }
+        }
+    }
+
 
     $(document).ready(function(){
         users = new Array();
@@ -207,30 +221,36 @@
     }
 
 
-    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball){
+    function CheckSettings(c_up, c_down, c_right, c_left, num_of_balls, color_25_ball, color_15_ball, color_5_ball){
         // if($("#c_up,#c_down,#c_right,#c_left,#num_of_balls,#color_25_ball,#color_15_ball,#color_5_ball:empty").length>0){
         //     window.alert("Fill all fields!")
         // }
         // else {
-            ball_25 = color_25_ball;
-            ball_15 = color_15_ball;
-            ball_5 = color_5_ball;
-            Start(num_of_balls,color_25_ball,color_15_ball,color_5_ball);
+            this.ball_25 = color_25_ball;
+            this.ball_15 = color_15_ball;
+            this.ball_5 = color_5_ball;
+            this.c_up=c_up;
+            this.c_down=c_down;
+            this.c_right=c_right;
+            this.c_down=c_left;
+            this.balls_number=num_of_balls;
+            Start();
             ShowSection('game');
-        // }
+    
         //to-do check fields 
     }
 
     function random(){
         ball_25 = 'red';
         ball_15 = 'green';
-        ball_5 = 'black';  
-        up = 'ArrowUp';
-        down ='ArrowDown';
-        right = 'ArrowRight';
-        left = 'ArrowLeft';  
+        ball_5 = 'black';    
+        c_up='ArrowUp';
+        c_down='ArrowDown';
+        c_right='ArrowRight';
+        c_left='ArrowLeft';
+        balls_number=50;
         ShowSection('game');
-        Start(50,'red','green','black');
+        Start();
     }
 
     function ShowSection(id)
@@ -268,34 +288,30 @@
     //10-packman
     //12-monster_type1
 
-    function Start(food_remain_input,color_25_ball,color_15_ball,color_5_ball,monster_amount) {
-        sound = new sound("music.mp3");
-        sound.play();
+
+    function Start() {
+        endSound = new sound('message.mp3');
+        playSound = new sound('music.mp3');
+        playSound.play();
         board = new Array();
         score = 0;
         number_of_eating = 0;
         pac_color = "yellow";
         var cnt = 100;
-        var food_remain = food_remain_input;
+        var food_remain = balls_number;
         //to-do food of scores
-        var food_25_remain = food_remain_input*0.6;
+        var food_25_remain = balls_number*0.6;
         food_25_remain = Math.floor(food_25_remain);
-        var food_15_remain = food_remain_input*0.3;
+        var food_15_remain = balls_number*0.3;
         food_15_remain = Math.floor(food_15_remain);
-        var food_5_remain = food_remain_input*0.1;
+        var food_5_remain = balls_number*0.1;
         food_5_remain = Math.floor(food_5_remain);
         var pacman_remain = 1;
         start_time = new Date();
-        var monster_remain = monster_amount;
-        number_of_lives = 3;
         for (var i = 0; i < 10; i++) {
             board[i] = new Array();
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             for (var j = 0; j < 10; j++) {
-                if((monster_remain > 0) && ((i===0 && j===0) || (i===9 && j===0) || (i===0 && j===9) || (i===9 && j===9))){
-                    monster_remain--;
-                    board[i][j]=12;
-                }
                 if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
                     board[i][j] = 4;
                 } else {
@@ -349,13 +365,13 @@
         }
         keysDown = {};
         addEventListener("keydown", function (e) {
-            if(e.code == up)
+            if(e.code == c_up)
             keysDown[0] = true;
-            if(e.code == down)
+            if(e.code == c_down)
             keysDown[1] = true;
-            if(e.code == right)
+            if(e.code == c_right)
             keysDown[2] = true;
-            if(e.code == left)
+            if(e.code == c_left)
             keysDown[3] = true;
         }, false);
         // addEventListener("keyup", function (e) {
@@ -467,11 +483,6 @@
                     context.rect(center.x - 30, center.y - 30, 60, 60);
                     context.fillStyle = "grey"; //color
                     context.fill();
-                } else if (board[i][j] === 12) {
-                    context.beginPath();
-                    context.rect(center.x - 30, center.y - 30, 60, 60);
-                    context.fillStyle = "green"; //color
-                    context.fill();
                 }
             }
         }
@@ -520,11 +531,6 @@
             score+=5;
             number_of_eating++;
         }
-        if (board[shape.i][shape.j] === 12) {
-            score-=10;
-            number_of_lives--;
-        }
- 
         
         board[shape.i][shape.j] = 10;
         var currentTime = new Date();
@@ -532,44 +538,15 @@
         if (score >= 20 && time_elapsed <= 10) {
             pac_color = "green";
         }
-        if (number_of_eating === num_of_balls) {//to-do change the 50 to somthing else by the number of balls
+        if (number_of_eating === 5) {//to-do change the 50 to somthing else by the number of balls
             window.clearInterval(interval);
-            sound.stop();
+            playSound.stop();
+            endSound.play();
             window.alert("Game completed");
+            endSound.stop();
         } else {
             Draw();
         }
-    }
-
-    function sound(src) {
-        this.sound = document.createElement("audio");
-        this.sound.src = src;
-        this.sound.setAttribute("preload", "auto");
-        this.sound.setAttribute("controls", "none");
-        this.sound.style.display = "none";
-        document.body.appendChild(this.sound);
-        this.play = function(){
-            this.sound.play();
-        }
-        this.stop = function(){
-            this.sound.pause();
-        }
-    }
-
-    function saveUp(event){
-        up = event.keyCode;
-    }
-
-    function saveDown(event){
-        down = event.keyCode;
-    }
-
-    function saveRight(event){
-        right = event.keyCode;
-    }
-
-    function saveLeft(event){
-        left = event.keyCode;
     }
 
 </script>
