@@ -1,0 +1,34 @@
+div{
+    top: 100px;
+    left: 150px;
+    position: absolute;
+    width: 600px;
+    height: 650px;
+}
+
+header{
+    background-color: blanchedalmond;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 700px;
+	height: 100px;
+}
+
+nav{
+    background-color: blanchedalmond;
+    position: absolute;
+	top: 100px;
+	left: 0px;
+	width: 150px;
+	height: 650px;
+}
+
+footer{
+    background-color: blanchedalmond;
+    position: absolute;
+	top: 750px;
+	left: 0px;
+	width: 700px;
+	height: 100px;
+}
