@@ -40,13 +40,20 @@
 </dialog>
 
 <div id="game" style="visibility: hidden;">
+    <br/>
+    Player Name:
+    <input id="lblPlayerName" type="text" class = lbls/>
+    <br/>
     SCORE:
-    <input id="lblScore" type="text"/>
+    <input id="lblScore" type="text" class = lbls/>
+    <br/>
+    remain life:
+    <input id="lblRemainLife" type="text" class = lbls/>
     <br/>
     TIME:
-    <input id="lblTime" type="text"/>
+    <input id="lblTime" type="text" class = lbls/>
     <br/>
-    <input type="button" value="new-game" onclick="Start()">
+    <input type="button" value="new-game" onclick="new_game()">
     <br/>
     <canvas id="canvas" height="600" width="600"></canvas>
 
@@ -97,14 +104,25 @@
 
 
 <div id="setting" style="visibility: hidden;">
-    <h4>move up controll: </h4>
+    
+
+    UpButton:
+    <input type="button" value="set Up movement" onclick=" c_up = updateUp()"><br><br>
+    DownButton:
+    <input type="button" value="set Down movement" onclick="c_down = updateDown()"><br><br>
+    RightButton:
+    <input type="button" value="set Right movement" onclick="c_right = updateRight()"><br><br>
+    LeftButton:
+    <input type="button" value="set Left movement" onclick="c_left = updateLeft()"><br><br>
+    
+    <!-- <h4>move up controll: </h4>
     <input id="move_up" type="text">
     <h4>move down controll: </h4>
     <input id="move_down" type="text">
     <h4>move right controll: </h4>
     <input id="move_right" type="text">
     <h4>move left controll:</h4>
-    <input id="move_left" type="text">
+    <input id="move_left" type="text"> -->
     <h4>number of balls: (between 50 to 90) </h4>
     <input id="num_of_balls" type="text">
     <h4>color of 25 ball: </h4>
@@ -113,10 +131,12 @@
     <input id="color_15_ball" type="text">
     <h4>color of 5 ball: </h4>
     <input id="color_5_ball" type="text">
+    <h4>Enter game time: </h4>
+    <input id="game_time" type="text">
     <input type="button" value="Random" onclick="random()">
-    <input type="button" value="Done" onclick="CheckSettings(document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,document.getElementById('num_of_balls').value,
+    <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
     document.getElementById('color_25_ball').value,document.getElementById('color_15_ball').value,
-    document.getElementById('color_5_ball').value)">
+    document.getElementById('color_5_ball').value,document.getElementById('game_time').value)">
 </div>
 
 <script type="text/javascript">
@@ -132,16 +152,20 @@
     var c_down;
     var c_right;
     var c_left;
+    var gameTime;
     var number_of_eating;
     var balls_number;
-    var win_score;
     var pac_color;
     var start_time;
     var time_elapsed;
     var interval;
     var users;
     var playSound;
-    var endSound;
+    var winSound;
+    var lostSound;
+    //var gameOver;//true when the game finished (timeElapsed\monsterKillU\Winning).
+    var currUser;//represent the current log-in user.
+    var remain_life=3;
 
     class User{
         constructor(username,password,fName,lName,email,bDate) {
@@ -197,6 +221,7 @@
             users.forEach(user => {
                 if(user.username==username && user.password==password){
                     isExist=true;
+                    currUser = user;
                 }
             });
             if(isExist){
@@ -221,18 +246,19 @@
     }
 
 
-    function CheckSettings(c_up, c_down, c_right, c_left, num_of_balls, color_25_ball, color_15_ball, color_5_ball){
+    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball,game_time){
         // if($("#c_up,#c_down,#c_right,#c_left,#num_of_balls,#color_25_ball,#color_15_ball,#color_5_ball:empty").length>0){
         //     window.alert("Fill all fields!")
         // }
         // else {
+            this.gameTime = game_time;
             this.ball_25 = color_25_ball;
             this.ball_15 = color_15_ball;
             this.ball_5 = color_5_ball;
-            this.c_up=c_up;
-            this.c_down=c_down;
-            this.c_right=c_right;
-            this.c_down=c_left;
+            // this.c_up=c_up;
+            // this.c_down=c_down;
+            // this.c_right=c_right;
+            // this.c_down=c_left;
             this.balls_number=num_of_balls;
             Start();
             ShowSection('game');
@@ -241,6 +267,7 @@
     }
 
     function random(){
+        this.gameTime = 15;
         ball_25 = 'red';
         ball_15 = 'green';
         ball_5 = 'black';    
@@ -290,7 +317,10 @@
 
 
     function Start() {
-        endSound = new sound('message.mp3');
+        lblPlayerName.value = currUser.username;
+        //gameOver = false;
+        winSound = new sound('message.mp3');//to-do change
+        lostSound = new sound('message.mp3');//to-do change
         playSound = new sound('music.mp3');
         playSound.play();
         board = new Array();
@@ -365,25 +395,15 @@
         }
         keysDown = {};
         addEventListener("keydown", function (e) {
-            if(e.code == c_up)
-            keysDown[0] = true;
-            if(e.code == c_down)
-            keysDown[1] = true;
-            if(e.code == c_right)
-            keysDown[2] = true;
-            if(e.code == c_left)
-            keysDown[3] = true;
+            if(e.key == c_up)
+            keysDown[c_up] = true;
+            if(e.key == c_down)
+            keysDown[c_down] = true;
+            if(e.key == c_right)
+            keysDown[c_right] = true;
+            if(e.key == c_left)
+            keysDown[c_left] = true;
         }, false);
-        // addEventListener("keyup", function (e) {
-        //     if(e.code == up)
-        //     keysDown[0] = false;
-        //     if(e.code == down)
-        //     keysDown[1] = false;
-        //     if(e.code == right)
-        //     keysDown[2] = false;
-        //     if(e.code == left)
-        //     keysDown[3] = false;
-        // }, false);
         interval = setInterval(UpdatePosition, 250);
     }
 
@@ -402,19 +422,19 @@
      * @return {number}
      */
     function GetKeyPressed() {
-        if (keysDown[0]) {
+        if (keysDown[c_up]) {
             move_direction = 0;
             return 0;
         }
-        if (keysDown[1]) {
+        if (keysDown[c_down]) {
             move_direction = 1;
             return 1;
         }
-        if (keysDown[2]) {
+        if (keysDown[c_right]) {
             move_direction = 2;
             return 2;
         }
-        if (keysDown[3]) {
+        if (keysDown[c_left]) {
             move_direction = 3;
             return 3;
         }
@@ -422,6 +442,7 @@
 
     function Draw() {
         context.clearRect(0, 0, canvas.width, canvas.height); //clean board
+        lblRemainLife.value = remain_life;
         lblScore.value = score;
         lblTime.value = time_elapsed;
         for (var i = 0; i < 10; i++) {
@@ -514,10 +535,10 @@
             }
         }
         
-        keysDown[0] = false;
-        keysDown[1] = false;
-        keysDown[2] = false;
-        keysDown[3] = false;
+        keysDown[c_up] = false;
+        keysDown[c_down] = false;
+        keysDown[c_right] = false;
+        keysDown[c_left] = false;
         
         if (board[shape.i][shape.j] === 1) {
             score+=25;
@@ -534,20 +555,86 @@
         
         board[shape.i][shape.j] = 10;
         var currentTime = new Date();
-        time_elapsed = (currentTime - start_time) / 1000;
+        time_elapsed = gameTime - (currentTime - start_time) / 1000;
         if (score >= 20 && time_elapsed <= 10) {
             pac_color = "green";
         }
-        if (number_of_eating === 5) {//to-do change the 50 to somthing else by the number of balls
+        if ((number_of_eating === balls_number || time_elapsed<=0)) {
+            //gameOver = true;
             window.clearInterval(interval);
             playSound.stop();
-            endSound.play();
-            window.alert("Game completed");
+            if(score<150){
+                lostSound.play();
+                window.alert("You can do better");
+                lostSound.stop();
+            }
+            else{
+                winSound.play();
+                window.alert("We have a Winner!!!");    
+                winSound.stop();
+            }
             endSound.stop();
-        } else {
+        }
+        else if(remain_life==0){
+            window.clearInterval(interval);
+            playSound.stop();
+            lostSound.play();        
+            window.alert("You Lost!");   
+            lostSound.stop(); 
+        }
+        else {
             Draw();
         }
     }
+
+    function updateUp() {
+        $(document).keydown(function(event){
+            
+            $(document).unbind()
+        });
+    }
+    function updateDown() {
+        $(document).keydown(function(event){
+            c_down = event.key;
+            $(document).unbind()
+        });
+    }
+    function updateRight() {
+        $(document).keydown(function(event){
+            c_right = event.key;
+            $(document).unbind()
+        });
+    }
+    function updateLeft() {
+        $(document).keydown(function(event){
+            c_left = event.key;
+            $(document).unbind()
+        });
+    }
+
+    function new_game() {
+        //stop all sounds.
+        playSound.stop();
+        winSound.stop();
+        lostSound.stop();
+        //start new game
+        Start();
+    }
+
+    function monsterHit(){
+        remain_life--;
+        findRandomEmptyCell(board);
+        var emptyCell = findRandomEmptyCell(board);
+        board[emptyCell[0]][emptyCell[1]] = 10;
+        Draw();
+    }
+
+    window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+    }, false);
 
 </script>
 </body>
