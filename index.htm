@@ -42,16 +42,16 @@
 <div id="game" style="visibility: hidden;">
     <br/>
     Player Name:
-    <input id="lblPlayerName" type="text" class = lbls/>
+    <input id="lblPlayerName" type="text" class = "lbls"/>
     <br/>
     SCORE:
-    <input id="lblScore" type="text" class = lbls/>
+    <input id="lblScore" type="text" class = "lbls"/>
     <br/>
     remain life:
-    <input id="lblRemainLife" type="text" class = lbls/>
+    <input id="lblRemainLife" type="text" class = "lbls"/>
     <br/>
     TIME:
-    <input id="lblTime" type="text" class = lbls/>
+    <input id="lblTime" type="text" class = "lbls"/>
     <br/>
     <input type="button" value="new-game" onclick="new_game()">
     <br/>
@@ -168,7 +168,7 @@
     var playSound;
     var winSound;
     var lostSound;
-    //var gameOver;//true when the game finished (timeElapsed\monsterKillU\Winning).
+    var gameOver=true;//true when the game finished (timeElapsed\monsterKillU\Winning).
     var currUser;//represent the current log-in user.
     var remain_life=3;
     var number_Of_monsters;
@@ -262,10 +262,7 @@
             this.ball_15 = color_15_ball;
             this.ball_5 = color_5_ball;
             this.number_Of_monsters=num_monsters;
-            // this.c_up=c_up;
-            // this.c_down=c_down;
-            // this.c_right=c_right;
-            // this.c_down=c_left;
+  
             this.balls_number=num_of_balls;
             Start();
             ShowSection('game');
@@ -291,6 +288,8 @@
 
     function ShowSection(id)
     {
+        if(gameOver==false)//to-do check the plaster
+            stopAllSounds();
     	//hide all sections
     	var div1 = document.getElementById('welcome');
     	div1.style.visibility="hidden";
@@ -299,7 +298,7 @@
         var div3 = document.getElementById('log-in');
     	div3.style.visibility="hidden";
         var div4 = document.getElementById('sign-up');
-    	div4.style.visibility="hidden";
+    	div4.style.visibility="hidden";;
         var div5 = document.getElementById('setting');
     	div5.style.visibility="hidden";
         //show only one section
@@ -330,7 +329,7 @@
 
     function Start() {
         lblPlayerName.value = currUser.username;
-        //gameOver = false;
+        gameOver = false;
         winSound = new sound('message.mp3');//to-do change
         lostSound = new sound('message.mp3');//to-do change
         playSound = new sound('music.mp3');
@@ -467,7 +466,7 @@
         context.clearRect(0, 0, canvas.width, canvas.height); //clean board
         lblRemainLife.value = remain_life;
         lblScore.value = score;
-        lblTime.value = time_elapsed;
+        lblTime.value = parseFloat(time_elapsed).toFixed(2);//fixed time show only 2 digits after the dot. like -- > 1.12
         for (var i = 0; i < 10; i++) {
             for (var j = 0; j < 10; j++) {
                 var center = new Object();
@@ -609,9 +608,9 @@
         if (score >= 20 && time_elapsed <= 10) {
             pac_color = "green";
         }
-        if ((number_of_eating === balls_number || time_elapsed<=0 || remain_life === 0)) {
-            //gameOver = true;
+        if (!gameOver && (number_of_eating === balls_number || time_elapsed<=0)) {
             Draw();
+            gameOver = true;
             window.clearInterval(interval);
             window.clearInterval(interval_monsters);
             playSound.stop();
@@ -625,9 +624,9 @@
                 window.alert("We have a Winner!!!");    
                 winSound.stop();
             }
-            endSound.stop();
         }
-        else if(remain_life==0){
+        else if(!gameOver && remain_life==0){
+            gameOver = true;
             window.clearInterval(interval);
             playSound.stop();
             lostSound.play();        
@@ -642,7 +641,7 @@
 
     function updateUp() {
         $(document).keydown(function(event){
-            
+            c_up = event.key;
             $(document).unbind()
         });
     }
@@ -667,9 +666,7 @@
 
     function new_game() {
         //stop all sounds.
-        playSound.stop();
-        winSound.stop();
-        lostSound.stop();
+        stopAllSounds();
         //start new game
         remain_life=3;
         Start();
@@ -760,6 +757,27 @@
         });
     }
 
+
+
+    //get the modal dialog of ("about")
+    var dialog = document.getElementById('about');
+    //close the about dialog when click outside of it with the mouse
+    dialog.addEventListener('click', function (event) {
+        var rect = dialog.getBoundingClientRect();
+        var isInDialog=(rect.top <= event.clientY && event.clientY <= rect.top + rect.height
+        && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+            dialog.close();
+        }
+    });
+
+    function stopAllSounds(){
+            playSound.stop();
+    
+            winSound.stop();
+
+            lostSound.stop();
+    }
 
 </script>
 </body>
