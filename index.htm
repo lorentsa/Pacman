@@ -636,7 +636,7 @@
             Draw();
             gameOver = true;
             playSound.stop();
-            if(score<150 || remain_life === 0){
+            if(score<150 && remain_life >= 0){
                 lostSound.play();
                 window.alert("You can do better");
                 window.clearInterval(interval);
@@ -652,6 +652,7 @@
             }
         }
         else if(!gameOver && remain_life==0){
+            Draw();
             gameOver = true;
             playSound.stop();
             lostSound.play();        
@@ -702,8 +703,8 @@
     function monsterHit(){
         score-=10;
         board[shape.i][shape.j]=12;
-            Draw();
         remain_life--;
+        Draw();
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 10;
         shape.i=emptyCell[0];
