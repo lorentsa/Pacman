@@ -9,22 +9,32 @@
 <body>
 
 <header>
-    Pacman
-    <br>
-    Loren Tsahalon
-    <br>
-    Niv Dudovitch
+    <!DOCTYPE html>
+<html>
+
+<head>
+        <link rel="stylesheet" type="text/css"  href="style.css" /> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    <img src="pacman.png" id="pacman">
+    <h1 id="pacmanTitle" >Pacman</h1>
+    <h5 id="loren">Loren Tsahalon</h5>
+    <h5>Niv Dudovitch</h5>
 </header>
 
+
+
 <nav>
-    <a href="#welcome" onclick="ShowSection('welcome')">Welcome</a>
-    <br>
-    <a href="#log-in" onclick="ShowSection('log-in')">Log-in</a>
-    <br>
-    <a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a>
-    <br>
-    <a href="#about" onclick="ShowDialog()">About</a>
-    <br>
+    <ul>
+        <li><a href="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
+        <li><a href="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
+        <li><a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
+        <li><a href="#about" onclick="ShowDialog()">About</a></li>
+    </ul>
 </nav>
 
 <footer>
@@ -42,16 +52,16 @@
 <div id="game" style="visibility: hidden;">
     <br/>
     Player Name:
-    <input id="lblPlayerName" type="text" class = "lbls"/>
+    <input id="lblPlayerName" type="text" class = lbls/>
     <br/>
     SCORE:
-    <input id="lblScore" type="text" class = "lbls"/>
+    <input id="lblScore" type="text" class = lbls/>
     <br/>
     remain life:
-    <input id="lblRemainLife" type="text" class = "lbls"/>
+    <input id="lblRemainLife" type="text" class = lbls/>
     <br/>
     TIME:
-    <input id="lblTime" type="text" class = "lbls"/>
+    <input id="lblTime" type="text" class = lbls/>
     <br/>
     <input type="button" value="new-game" onclick="new_game()">
     <br/>
@@ -62,6 +72,8 @@
 <div id="welcome" style="visibility: visible;">
     <input type="button" value="log-in" onclick="ShowSection('log-in')">
     <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
+    <br>
+    <img src="play.png">
 </div>
 
 <div id="sign-up" style="visibility: hidden;">
@@ -91,11 +103,11 @@
 
 <div id="log-in" style="visibility: hidden;">
     <h1>Username: </h1>
-    <br>
     <input id="username" type="text">
-    <h1>Password: </h1>
     <br>
+    <h1>Password: </h1>
     <input id="passw" type="text">
+    <br>
     <br>
 
     <input type="button" value="sign-in" onclick="CheckSignIn(document.getElementById('username').value,
@@ -123,29 +135,27 @@
     <input id="move_right" type="text">
     <h4>move left controll:</h4>
     <input id="move_left" type="text"> -->
-    <h4>Number of balls: (between 50 to 90) </h4>
+    <h4>number of balls: (between 50 to 90) </h4>
     <input id="num_of_balls" type="text">
-    <h4>Number of monsters: </h4>
-    <input id="num_of_monsters" type="text">
-    <h4>Color of 25 ball: </h4>
+    <h4>color of 25 ball: </h4>
     <input id="color_25_ball" type="text">
-    <h4>Color of 15 ball: </h4>
+    <h4>color of 15 ball: </h4>
     <input id="color_15_ball" type="text">
-    <h4>Color of 5 ball: </h4>
+    <h4>color of 5 ball: </h4>
     <input id="color_5_ball" type="text">
     <h4>Enter game time: </h4>
     <input id="game_time" type="text">
+    <br>
+    <br>
     <input type="button" value="Random" onclick="random()">
     <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
     document.getElementById('color_25_ball').value,document.getElementById('color_15_ball').value,
-    document.getElementById('color_5_ball').value,document.getElementById('game_time').value,
-    document.getElementById('num_of_monsters').value)">
+    document.getElementById('color_5_ball').value,document.getElementById('game_time').value)">
 </div>
 
 <script type="text/javascript">
     var context = canvas.getContext("2d");
     var shape = new Object();
-    var activeMonsters;
     var board;
     var score;
     var move_direction;
@@ -163,15 +173,13 @@
     var start_time;
     var time_elapsed;
     var interval;
-    var interval_monsters;
     var users;
     var playSound;
     var winSound;
     var lostSound;
-    var gameOver=true;//true when the game finished (timeElapsed\monsterKillU\Winning).
+    //var gameOver;//true when the game finished (timeElapsed\monsterKillU\Winning).
     var currUser;//represent the current log-in user.
     var remain_life=3;
-    var number_Of_monsters;
 
     class User{
         constructor(username,password,fName,lName,email,bDate) {
@@ -252,7 +260,7 @@
     }
 
 
-    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball,game_time,num_monsters){
+    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball,game_time){
         // if($("#c_up,#c_down,#c_right,#c_left,#num_of_balls,#color_25_ball,#color_15_ball,#color_5_ball:empty").length>0){
         //     window.alert("Fill all fields!")
         // }
@@ -261,8 +269,10 @@
             this.ball_25 = color_25_ball;
             this.ball_15 = color_15_ball;
             this.ball_5 = color_5_ball;
-            this.number_Of_monsters=num_monsters;
-  
+            // this.c_up=c_up;
+            // this.c_down=c_down;
+            // this.c_right=c_right;
+            // this.c_down=c_left;
             this.balls_number=num_of_balls;
             Start();
             ShowSection('game');
@@ -279,8 +289,6 @@
         c_down='ArrowDown';
         c_right='ArrowRight';
         c_left='ArrowLeft';
-        this.number_Of_monsters=2;
-
         balls_number=50;
         ShowSection('game');
         Start();
@@ -288,8 +296,6 @@
 
     function ShowSection(id)
     {
-        if(gameOver==false)//to-do check the plaster
-            stopAllSounds();
     	//hide all sections
     	var div1 = document.getElementById('welcome');
     	div1.style.visibility="hidden";
@@ -298,7 +304,7 @@
         var div3 = document.getElementById('log-in');
     	div3.style.visibility="hidden";
         var div4 = document.getElementById('sign-up');
-    	div4.style.visibility="hidden";;
+    	div4.style.visibility="hidden";
         var div5 = document.getElementById('setting');
     	div5.style.visibility="hidden";
         //show only one section
@@ -322,14 +328,11 @@
     //4-obstacle
     //10-packman
     //12-monster_type1
-    //13-monster_on_food_25
-    //14-monster_on_food_15
-    //15-monster_on_food_5
 
 
     function Start() {
         lblPlayerName.value = currUser.username;
-        gameOver = false;
+        //gameOver = false;
         winSound = new sound('message.mp3');//to-do change
         lostSound = new sound('message.mp3');//to-do change
         playSound = new sound('music.mp3');
@@ -348,30 +351,12 @@
         var food_5_remain = balls_number*0.1;
         food_5_remain = Math.floor(food_5_remain);
         var pacman_remain = 1;
-        var monsters_remain = number_Of_monsters;
-        activeMonsters = new Array();
         start_time = new Date();
         for (var i = 0; i < 10; i++) {
             board[i] = new Array();
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             for (var j = 0; j < 10; j++) {
-              if((monsters_remain>0) && ((i===0 && j===0) || (i===9 && j===0) || (i===0 && j===9) || (i===9 && j===9))){
-                    board[i][j]=12;
-                    var monster = new Object();
-                    monster.i=i;
-                    monster.j=j;
-                    activeMonsters.push(monster);
-                    monsters_remain--;
-                }
-                  else if (j==1 && (i==3 || i==4 || i==6 || i==7 || i==9)){
-                    board[i][j] = 4;
-                } else if (j==3 && (i==3 || i==5 || i==6 || i==7 || i==9)){
-                    board[i][j] = 4;
-                } else if (j==5 && (i==0 || i==1 || i==2 || i==7 || i==9)){
-                    board[i][j] = 4;
-                } else if (j==6 && (i==2 || i==5 || i==6 || i==7 || i==9)){
-                    board[i][j] = 4;
-                } else if (j==7 && (i==0 || i==1 || i==2 || i==7 || i==9)){//j==4 i==8
+                if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
                     board[i][j] = 4;
                 } else {
                     var randomNum = Math.random();
@@ -434,7 +419,6 @@
             keysDown[c_left] = true;
         }, false);
         interval = setInterval(UpdatePosition, 250);
-        interval_monsters = setInterval(ChangeLocationsOfMonsters, 1000);
     }
 
 
@@ -474,7 +458,7 @@
         context.clearRect(0, 0, canvas.width, canvas.height); //clean board
         lblRemainLife.value = remain_life;
         lblScore.value = score;
-        lblTime.value = parseFloat(time_elapsed).toFixed(2);//fixed time show only 2 digits after the dot. like -- > 1.12
+        lblTime.value = time_elapsed;
         for (var i = 0; i < 10; i++) {
             for (var j = 0; j < 10; j++) {
                 var center = new Object();
@@ -534,21 +518,6 @@
                     context.rect(center.x - 30, center.y - 30, 60, 60);
                     context.fillStyle = "grey"; //color
                     context.fill();
-                } else if(board[i][j] === 12 || board[i][j] === 13 || board[i][j] === 14 || board[i][j] === 15){
-                    //to-do draw monster
-                    // base_image = new Image();
-                    // base_image.src = 'monster.jpg';
-                    // base_image.onload = function(){
-                    //     context.drawImage(base_image, 0, 0);
-                    // }
-                    // context.beginPath();
-                    // context.rect(center.x - 30, center.y - 30, 60, 60);
-                    // context.fillStyle = "red"; //color
-                    // context.fill();
-                    context.beginPath();
-                    context.arc(center.x, center.y, 22, 0,  Math.PI); // circle
-                    context.fillStyle = "orange"; //color
-                    context.fill();
                 }
             }
         }
@@ -557,11 +526,6 @@
     }
 
     function UpdatePosition() {
-        var b = false;
-        if(board[shape.i][shape.j] === 22){
-            b=true;
-            monsterHit();
-        }
         board[shape.i][shape.j] = 0;
         var x = GetKeyPressed();
         if (x === 0) {
@@ -574,33 +538,16 @@
                 shape.j++;
             }
         }
-        if (x === 2) { 
-            if(shape.i==9 && shape.j==4){
-                board[shape.i][shape.j] = 10;
-                Draw();
-                board[shape.i][shape.j] = 0;
-                shape.i=0;
-                shape.j=6;
-                b = true;
-            }
-            else if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
+        if (x === 2) {
+            if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
                 shape.i++;
             }
         }
         if (x === 3) {
-            if(shape.i==0 && shape.j==6){
-                board[shape.i][shape.j] = 10;
-                Draw();
-                b = true;
-                board[shape.i][shape.j] = 0;
-                shape.i=9;
-                shape.j=4;
-            }
-            else if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
                 shape.i--;
             }
         }
-        
         
         keysDown[c_up] = false;
         keysDown[c_down] = false;
@@ -619,56 +566,44 @@
             score+=5;
             number_of_eating++;
         }
-        if(b==false && (board[shape.i][shape.j] === 12 || board[shape.i][shape.j] === 13 || board[shape.i][shape.j] === 14 || board[shape.i][shape.j] === 15 )){
-            b=true;
-            monsterHit();
-        }
-        else{
-            board[shape.i][shape.j] = 10;    
-        }
-      
+        
+        board[shape.i][shape.j] = 10;
         var currentTime = new Date();
         time_elapsed = gameTime - (currentTime - start_time) / 1000;
         if (score >= 20 && time_elapsed <= 10) {
             pac_color = "green";
         }
-        if (!gameOver && (number_of_eating === balls_number || time_elapsed<=0)) {
-            Draw();
-            gameOver = true;
+        if ((number_of_eating === balls_number || time_elapsed<=0)) {
+            //gameOver = true;
+            window.clearInterval(interval);
             playSound.stop();
-            if(score<150 || remain_life === 0){
+            if(score<150){
                 lostSound.play();
                 window.alert("You can do better");
-                window.clearInterval(interval);
-                window.clearInterval(interval_monsters);
                 lostSound.stop();
             }
             else{
                 winSound.play();
                 window.alert("We have a Winner!!!");    
-                window.clearInterval(interval);
-                window.clearInterval(interval_monsters);
                 winSound.stop();
             }
+            endSound.stop();
         }
-        else if(!gameOver && remain_life==0){
-            gameOver = true;
+        else if(remain_life==0){
+            window.clearInterval(interval);
             playSound.stop();
             lostSound.play();        
             window.alert("You Lost!");   
-            window.clearInterval(interval);
-            window.clearInterval(interval_monsters);
             lostSound.stop(); 
         }
         else {
-            if(b==false)
-                Draw();
+            Draw();
         }
     }
 
     function updateUp() {
         $(document).keydown(function(event){
-            c_up = event.key;
+            
             $(document).unbind()
         });
     }
@@ -693,41 +628,19 @@
 
     function new_game() {
         //stop all sounds.
-        stopAllSounds();
+        playSound.stop();
+        winSound.stop();
+        lostSound.stop();
         //start new game
-        remain_life=3;
         Start();
     }
 
     function monsterHit(){
-        score-=10;
-        board[shape.i][shape.j]=12;
-            Draw();
         remain_life--;
+        findRandomEmptyCell(board);
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 10;
-        shape.i=emptyCell[0];
-        shape.j=emptyCell[1];
-        var count_monsters = 0;
-        activeMonsters.forEach(function(monster){
-            board[monster.i][monster.j]-=12;
-            if(count_monsters === 0){
-                board[0][0]=12;
-                monster.i=0;
-                monster.j=0;
-            }
-            else if(count_monsters === 1){
-                board[0][9]=12;
-                monster.i=0;
-                monster.j=9;
-            }
-            else if(count_monsters === 2){
-                board[9][0]=12;
-                monster.i=9;
-                monster.j=0;
-            }
-            count_monsters++;
-        })
+        Draw();
     }
 
     window.addEventListener("keydown", function(e) {
@@ -737,74 +650,8 @@
     }
     }, false);
 
-    function ChangeLocationsOfMonsters(){
-        activeMonsters.forEach(function(monster) {
-            var distance_minimum = 10000;
-            var chosen_i = monster.i;
-            var chosen_j = monster.j;
-            if(monster.i > 0 && board[monster.i-1][monster.j] != 4){
-                var distanceUp =  Math.sqrt( Math.pow(monster.i-1-shape.i,2), Math.pow(monster.j-shape.j,2));
-                if(distanceUp < distance_minimum){
-                    distance_minimum = distanceUp;
-                    chosen_i=monster.i-1;
-                    chosen_j=monster.j;
-                }
-            } 
-            if(monster.i < 9 && board[monster.i+1][monster.j]!=4){
-                var distanceDown =  Math.sqrt( Math.pow(monster.i+1-shape.i,2), Math.pow(monster.j-shape.j,2));
-                if(distanceDown < distance_minimum){
-                    distance_minimum = distanceDown;
-                    chosen_i=monster.i+1;
-                    chosen_j=monster.j;
-                }
-            }
-            if(monster.j > 0 && board[monster.i][monster.j-1]!=4 ){
-                var distanceLeft =  Math.sqrt( Math.pow(monster.i-shape.i,2), Math.pow(monster.j-1-shape.j,2));
-                if(distanceLeft < distance_minimum){
-                    distance_minimum = distanceLeft;
-                    chosen_i=monster.i;
-                    chosen_j=monster.j-1;
-                }
-            }
-            if(monster.j < 9 && board[monster.i][monster.j+1]!=4){
-                var distanceRight =  Math.sqrt( Math.pow(monster.i-shape.i,2), Math.pow(monster.j+1-shape.j,2));
-                if(distanceRight < distance_minimum){
-                    distance_minimum = distanceRight;
-                    chosen_i=monster.i;
-                    chosen_j=monster.j+1;
-                }
-            }
-            board[monster.i][monster.j]-=12;
-            board[chosen_i][chosen_j]+=12;
-            monster.i=chosen_i;
-            monster.j=chosen_j;
-            // if(board[monster.i][monster.j] === board[shape.i][shape.j]){
-            //     monsterHit();
-            // }
-        });
-    }
-
-
-
-    //get the modal dialog of ("about")
-    var dialog = document.getElementById('about');
-    //close the about dialog when click outside of it with the mouse
-    dialog.addEventListener('click', function (event) {
-        var rect = dialog.getBoundingClientRect();
-        var isInDialog=(rect.top <= event.clientY && event.clientY <= rect.top + rect.height
-        && rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-        if (!isInDialog) {
-            dialog.close();
-        }
-    });
-
-    function stopAllSounds(){
-            playSound.stop();;
-            winSound.stop();
-            lostSound.stop();
-    }
-
 </script>
 </body>
 
 </html>
+   
