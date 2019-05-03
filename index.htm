@@ -355,7 +355,7 @@
             board[i] = new Array();
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             for (var j = 0; j < 10; j++) {
-                if((monsters_remain>0) && ((i===0 && j===0) || (i===9 && j===0) || (i===0 && j===9) || (i===9 && j===9))){
+              if((monsters_remain>0) && ((i===0 && j===0) || (i===9 && j===0) || (i===0 && j===9) || (i===9 && j===9))){
                     board[i][j]=12;
                     var monster = new Object();
                     monster.i=i;
@@ -363,7 +363,15 @@
                     activeMonsters.push(monster);
                     monsters_remain--;
                 }
-                else if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
+                  else if (j==1 && (i==3 || i==4 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==3 && (i==3 || i==5 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==5 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==6 && (i==2 || i==5 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==7 && (i==0 || i==1 || i==2 || i==7 || i==9)){//j==4 i==8
                     board[i][j] = 4;
                 } else {
                     var randomNum = Math.random();
@@ -566,16 +574,33 @@
                 shape.j++;
             }
         }
-        if (x === 2) {
-            if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
+        if (x === 2) { 
+            if(shape.i==9 && shape.j==4){
+                board[shape.i][shape.j] = 10;
+                Draw();
+                board[shape.i][shape.j] = 0;
+                shape.i=0;
+                shape.j=6;
+                b = true;
+            }
+            else if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
                 shape.i++;
             }
         }
         if (x === 3) {
-            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+            if(shape.i==0 && shape.j==6){
+                board[shape.i][shape.j] = 10;
+                Draw();
+                b = true;
+                board[shape.i][shape.j] = 0;
+                shape.i=9;
+                shape.j=4;
+            }
+            else if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
                 shape.i--;
             }
         }
+        
         
         keysDown[c_up] = false;
         keysDown[c_down] = false;
@@ -601,8 +626,7 @@
         else{
             board[shape.i][shape.j] = 10;    
         }
-        
-        //ChangeLocationsOfMonsters();
+      
         var currentTime = new Date();
         time_elapsed = gameTime - (currentTime - start_time) / 1000;
         if (score >= 20 && time_elapsed <= 10) {
@@ -611,26 +635,29 @@
         if (!gameOver && (number_of_eating === balls_number || time_elapsed<=0)) {
             Draw();
             gameOver = true;
-            window.clearInterval(interval);
-            window.clearInterval(interval_monsters);
             playSound.stop();
             if(score<150 || remain_life === 0){
                 lostSound.play();
                 window.alert("You can do better");
+                window.clearInterval(interval);
+                window.clearInterval(interval_monsters);
                 lostSound.stop();
             }
             else{
                 winSound.play();
                 window.alert("We have a Winner!!!");    
+                window.clearInterval(interval);
+                window.clearInterval(interval_monsters);
                 winSound.stop();
             }
         }
         else if(!gameOver && remain_life==0){
             gameOver = true;
-            window.clearInterval(interval);
             playSound.stop();
             lostSound.play();        
             window.alert("You Lost!");   
+            window.clearInterval(interval);
+            window.clearInterval(interval_monsters);
             lostSound.stop(); 
         }
         else {
@@ -772,10 +799,8 @@
     });
 
     function stopAllSounds(){
-            playSound.stop();
-    
+            playSound.stop();;
             winSound.stop();
-
             lostSound.stop();
     }
 
