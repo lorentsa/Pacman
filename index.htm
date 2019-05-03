@@ -9,32 +9,22 @@
 <body>
 
 <header>
-    <!DOCTYPE html>
-<html>
-
-<head>
-        <link rel="stylesheet" type="text/css"  href="style.css" /> 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-</head>
-
-<body>
-
-<header>
-    <img src="pacman.png" id="pacman">
-    <h1 id="pacmanTitle" >Pacman</h1>
-    <h5 id="loren">Loren Tsahalon</h5>
-    <h5>Niv Dudovitch</h5>
+    Pacman
+    <br>
+    Loren Tsahalon
+    <br>
+    Niv Dudovitch
 </header>
 
-
-
 <nav>
-    <ul>
-        <li><a href="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
-        <li><a href="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
-        <li><a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
-        <li><a href="#about" onclick="ShowDialog()">About</a></li>
-    </ul>
+    <a href="#welcome" onclick="ShowSection('welcome')">Welcome</a>
+    <br>
+    <a href="#log-in" onclick="ShowSection('log-in')">Log-in</a>
+    <br>
+    <a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a>
+    <br>
+    <a href="#about" onclick="ShowDialog()">About</a>
+    <br>
 </nav>
 
 <footer>
@@ -52,16 +42,16 @@
 <div id="game" style="visibility: hidden;">
     <br/>
     Player Name:
-    <input id="lblPlayerName" type="text" class = lbls/>
+    <input id="lblPlayerName" type="text" class = "lbls"/>
     <br/>
     SCORE:
-    <input id="lblScore" type="text" class = lbls/>
+    <input id="lblScore" type="text" class = "lbls"/>
     <br/>
     remain life:
-    <input id="lblRemainLife" type="text" class = lbls/>
+    <input id="lblRemainLife" type="text" class = "lbls"/>
     <br/>
     TIME:
-    <input id="lblTime" type="text" class = lbls/>
+    <input id="lblTime" type="text" class = "lbls"/>
     <br/>
     <input type="button" value="new-game" onclick="new_game()">
     <br/>
@@ -74,8 +64,6 @@
 <div id="welcome" style="visibility: visible;">
     <input type="button" value="log-in" onclick="ShowSection('log-in')">
     <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
-    <br>
-    <img src="play.png">
 </div>
 
 <div id="sign-up" style="visibility: hidden;">
@@ -105,11 +93,11 @@
 
 <div id="log-in" style="visibility: hidden;">
     <h1>Username: </h1>
+    <br>
     <input id="username" type="text">
-    <br>
     <h1>Password: </h1>
-    <input id="passw" type="text">
     <br>
+    <input id="passw" type="text">
     <br>
 
     <input type="button" value="sign-in" onclick="CheckSignIn(document.getElementById('username').value,
@@ -137,7 +125,7 @@
     <input id="move_right" type="text">
     <h4>move left controll:</h4>
     <input id="move_left" type="text"> -->
-    <h4>number of balls: (between 50 to 90) </h4>
+    <h4>Number of balls: (between 50 to 90) </h4>
     <input id="num_of_balls" type="text">
     <select name="list" id="colorList25">
         <option value="blue">blue</option>
@@ -156,10 +144,14 @@
                    </select>
     <h4>Number of monsters: </h4>
     <input id="num_of_monsters" type="text">
+    <!-- <h4>Color of 25 ball: </h4>
+    <input id="color_25_ball" type="text">
+    <h4>Color of 15 ball: </h4>
+    <input id="color_15_ball" type="text">
+    <h4>Color of 5 ball: </h4>
+    <input id="color_5_ball" type="text"> -->
     <h4>Enter game time: </h4>
     <input id="game_time" type="text">
-    <br>
-    <br>
     <input type="button" value="Random" onclick="random()">
     <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
     document.getElementById('colorList25').value,document.getElementById('colorList15').value,
@@ -170,6 +162,7 @@
 <script type="text/javascript">
     var context = canvas.getContext("2d");
     var shape = new Object();
+    var activeMonsters;
     var board;
     var score;
     var move_direction;
@@ -188,11 +181,12 @@
     var start_time;
     var time_elapsed;
     var interval;
+    var interval_monsters;
     var users;
     var playSound;
     var winSound;
     var lostSound;
-    //var gameOver;//true when the game finished (timeElapsed\monsterKillU\Winning).
+    var gameOver=true;//true when the game finished (timeElapsed\monsterKillU\Winning).
     var currUser;//represent the current log-in user.
     var remain_life=3;
     var number_Of_monsters;
@@ -279,7 +273,7 @@
     }
 
 
-    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball,game_time){
+    function CheckSettings(num_of_balls, color_25_ball, color_15_ball, color_5_ball,game_time,num_monsters){
         // if($("#c_up,#c_down,#c_right,#c_left,#num_of_balls,#color_25_ball,#color_15_ball,#color_5_ball:empty").length>0){
         //     window.alert("Fill all fields!")
         // }
@@ -313,6 +307,8 @@
 
     function ShowSection(id)
     {
+        if(gameOver==false)//to-do check the plaster
+            stopAllSounds();
     	//hide all sections
     	var div1 = document.getElementById('welcome');
     	div1.style.visibility="hidden";
@@ -321,7 +317,7 @@
         var div3 = document.getElementById('log-in');
     	div3.style.visibility="hidden";
         var div4 = document.getElementById('sign-up');
-    	div4.style.visibility="hidden";
+    	div4.style.visibility="hidden";;
         var div5 = document.getElementById('setting');
     	div5.style.visibility="hidden";
         //show only one section
@@ -353,7 +349,7 @@
 
     function Start() {
         lblPlayerName.value = currUser.username;
-        //gameOver = false;
+        gameOver = false;
         winSound = new sound('message.mp3');//to-do change
         lostSound = new sound('message.mp3');//to-do change
         playSound = new sound('music.mp3');
@@ -371,12 +367,30 @@
         var food_5_remain = balls_number*0.1;
         food_5_remain = Math.floor(food_5_remain);
         var pacman_remain = 1;
+        var monsters_remain = number_Of_monsters;
+        activeMonsters = new Array();
         start_time = new Date();
         for (var i = 0; i < 10; i++) {
             board[i] = new Array();
             //put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
             for (var j = 0; j < 10; j++) {
-                if ((i === 3 && j === 3) || (i === 3 && j === 4) || (i === 3 && j === 5) || (i === 6 && j === 1) || (i === 6 && j === 2)) {
+              if((monsters_remain>0) && ((i===0 && j===0) || (i===9 && j===0) || (i===0 && j===9) || (i===9 && j===9))){
+                    board[i][j]=12;
+                    var monster = new Object();
+                    monster.i=i;
+                    monster.j=j;
+                    activeMonsters.push(monster);
+                    monsters_remain--;
+                }
+                  else if (j==1 && (i==3 || i==4 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==3 && (i==3 || i==5 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==5 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==6 && (i==2 || i==5 || i==6 || i==7 || i==9)){
+                    board[i][j] = 4;
+                } else if (j==7 && (i==0 || i==1 || i==2 || i==7 || i==9)){//j==4 i==8
                     board[i][j] = 4;
                 } else {
                     var randomNum = Math.random();
@@ -482,7 +496,7 @@
         context.clearRect(0, 0, canvas.width, canvas.height); //clean board
         lblRemainLife.value = remain_life;
         lblScore.value = score;
-        lblTime.value = time_elapsed;
+        lblTime.value = parseFloat(time_elapsed).toFixed(2);//fixed time show only 2 digits after the dot. like -- > 1.12
         for (var i = 0; i < 10; i++) {
             for (var j = 0; j < 10; j++) {
                 var center = new Object();
@@ -591,16 +605,33 @@
                 shape.j++;
             }
         }
-        if (x === 2) {
-            if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
+        if (x === 2) { 
+            if(shape.i==9 && shape.j==4){
+                board[shape.i][shape.j] = 10;
+                Draw();
+                board[shape.i][shape.j] = 0;
+                shape.i=0;
+                shape.j=6;
+                b = true;
+            }
+            else if (shape.i < 9 && board[shape.i + 1][shape.j] !== 4) {
                 shape.i++;
             }
         }
         if (x === 3) {
-            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+            if(shape.i==0 && shape.j==6){
+                board[shape.i][shape.j] = 10;
+                Draw();
+                b = true;
+                board[shape.i][shape.j] = 0;
+                shape.i=9;
+                shape.j=4;
+            }
+            else if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
                 shape.i--;
             }
         }
+        
         
         keysDown[c_up] = false;
         keysDown[c_down] = false;
@@ -634,9 +665,9 @@
         if (score >= 20 && time_elapsed <= 10) {
             pac_color = "green";
         }
-        if ((number_of_eating === balls_number || time_elapsed<=0)) {
-            //gameOver = true;
-            window.clearInterval(interval);
+        if (!gameOver && (number_of_eating === balls_number || time_elapsed<=0)) {
+            Draw();
+            gameOver = true;
             playSound.stop();
             if(score<150 && remain_life >= 0){
                 lostSound.play();
@@ -652,10 +683,8 @@
                 window.clearInterval(interval);
                 window.clearInterval(interval_monsters);
                 window.clearInterval(interval_time_monster);
-
                 winSound.stop();
             }
-            endSound.stop();
         }
         else if(!gameOver && remain_life==0){
             Draw();
@@ -666,21 +695,17 @@
             window.clearInterval(interval);
             window.clearInterval(interval_monsters);
             window.clearInterval(interval_time_monster);
-        else if(remain_life==0){
-            window.clearInterval(interval);
-            playSound.stop();
-            lostSound.play();        
-            window.alert("You Lost!");   
             lostSound.stop(); 
         }
         else {
-            Draw();
+            if(b==false)
+                Draw();
         }
     }
 
     function updateUp() {
         $(document).keydown(function(event){
-            
+            c_up = event.key;
             $(document).unbind()
         });
     }
@@ -709,9 +734,7 @@
         window.clearInterval(interval_monsters);
         window.clearInterval(interval_time_monster);
         //stop all sounds.
-        playSound.stop();
-        winSound.stop();
-        lostSound.stop();
+        stopAllSounds();
         //start new game
         remain_life=3;
         gameTimeBonus=0;
@@ -726,7 +749,28 @@
         Draw();
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 10;
-        Draw();
+        shape.i=emptyCell[0];
+        shape.j=emptyCell[1];
+        var count_monsters = 0;
+        activeMonsters.forEach(function(monster){
+            board[monster.i][monster.j]-=12;
+            if(count_monsters === 0){
+                board[0][0]=12;
+                monster.i=0;
+                monster.j=0;
+            }
+            else if(count_monsters === 1){
+                board[0][9]=12;
+                monster.i=0;
+                monster.j=9;
+            }
+            else if(count_monsters === 2){
+                board[9][0]=12;
+                monster.i=9;
+                monster.j=0;
+            }
+            count_monsters++;
+        })
     }
 
     window.addEventListener("keydown", function(e) {
@@ -735,6 +779,7 @@
         e.preventDefault();
     }
     }, false);
+
     
     function changeLocationOfTimeMonster(){
         var moved = false;
@@ -845,4 +890,3 @@
 </body>
 
 </html>
-   
