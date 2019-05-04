@@ -9,22 +9,32 @@
 <body>
 
 <header>
-    Pacman
-    <br>
-    Loren Tsahalon
-    <br>
-    Niv Dudovitch
+    <!DOCTYPE html>
+<html>
+
+<head>
+        <link rel="stylesheet" type="text/css"  href="style.css" /> 
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    <img src="pacman.png" id="pacman">
+    <h1 id="pacmanTitle" >Pacman</h1>
+    <h5 id="loren">Loren Tsahalon</h5>
+    <h5>Niv Dudovitch</h5>
 </header>
 
+
+
 <nav>
-    <a href="#welcome" onclick="ShowSection('welcome')">Welcome</a>
-    <br>
-    <a href="#log-in" onclick="ShowSection('log-in')">Log-in</a>
-    <br>
-    <a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a>
-    <br>
-    <a href="#about" onclick="ShowDialog()">About</a>
-    <br>
+    <ul>
+        <li><a href="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
+        <li><a href="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
+        <li><a href="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
+        <li><a href="#about" onclick="ShowDialog()">About</a></li>
+    </ul>
 </nav>
 
 <footer>
@@ -42,16 +52,16 @@
 <div id="game" style="visibility: hidden;">
     <br/>
     Player Name:
-    <input id="lblPlayerName" type="text" class = "lbls"/>
+    <input id="lblPlayerName" type="text" class = lbls/>
     <br/>
     SCORE:
-    <input id="lblScore" type="text" class = "lbls"/>
+    <input id="lblScore" type="text" class = lbls/>
     <br/>
     remain life:
-    <input id="lblRemainLife" type="text" class = "lbls"/>
+    <input id="lblRemainLife" type="text" class = lbls/>
     <br/>
     TIME:
-    <input id="lblTime" type="text" class = "lbls"/>
+    <input id="lblTime" type="text" class = lbls/>
     <br/>
     <input type="button" value="new-game" onclick="new_game()">
     <br/>
@@ -64,6 +74,8 @@
 <div id="welcome" style="visibility: visible;">
     <input type="button" value="log-in" onclick="ShowSection('log-in')">
     <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
+    <br>
+    <img src="play.png">
 </div>
 
 <div id="sign-up" style="visibility: hidden;">
@@ -98,6 +110,7 @@
     <h1>Password: </h1>
     <br>
     <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''">
+    <br>
     <br>
 
     <input type="button" value="sign-in" onclick="CheckSignIn(document.getElementById('username').value,
@@ -144,23 +157,14 @@
         <option value="red">red</option>
     </select>
     <h4>Number of monsters: (1-3) </h4>
-    <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''">
-    
-    <!-- <h4>Color of 25 ball: </h4>
-    <input id="color_25_ball" type="text">
-    <h4>Color of 15 ball: </h4>
-    <input id="color_15_ball" type="text">
-    <h4>Color of 5 ball: </h4>
-    <input id="color_5_ball" type="text"> -->
-    <h4>Enter game time: </h4>
+    <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''"> 
     <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''">
     <br>
     <br>
     <input type="button" value="Random" onclick="random()">
     <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
-    document.getElementById('colorList25').value,document.getElementById('colorList15').value,
-    document.getElementById('colorList5').value,document.getElementById('game_time').value,
-    document.getElementById('num_of_monsters').value)">
+    document.getElementById('color_25_ball').value,document.getElementById('color_15_ball').value,
+    document.getElementById('color_5_ball').value,document.getElementById('game_time').value)">
 </div>
 
 <script type="text/javascript">
