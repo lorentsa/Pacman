@@ -379,8 +379,8 @@
         start_time = new Date();
         for (var i = 0; i < 20; i++) {
             board[i] = new Array();
-            for (var j = 0; j < 12; j++) {
-              if((monsters_remain>0) && ((i===0 && j===0) || (i===19 && j===0) || (i===0 && j===11) || (i===19 && j===11))){
+            for (var j = 0; j < 10; j++) {
+              if((monsters_remain>0) && ((i===0 && j===0) || (i===19 && j===0) || (i===0 && j===9) || (i===19 && j===9))){
                     board[i][j]=12;
                     var monster = new Object();
                     monster.i=i;
@@ -466,11 +466,11 @@
 
 
     function findRandomEmptyCell(board) {
-        var i = Math.floor((Math.random() * 19));
-        var j = Math.floor((Math.random() * 11));
+        var i = Math.floor((Math.random() * 20));
+        var j = Math.floor((Math.random() * 10));
         while (board[i][j] !== 0) {
-            i = Math.floor((Math.random() * 19));
-            j = Math.floor((Math.random() * 11));
+            i = Math.floor((Math.random() * 20));
+            j = Math.floor((Math.random() * 10));
         }
         return [i, j];
     }
@@ -504,7 +504,7 @@
         lblScore.value = score;
         lblTime.value = parseFloat(time_elapsed).toFixed(2);//fixed time show only 2 digits after the dot. like -- > 1.12
         for (var i = 0; i < 20; i++) {
-            for (var j = 0; j < 12; j++) {
+            for (var j = 0; j < 10; j++) {
                 var center = new Object();
                 center.x = i * 60 + 30;
                 center.y = j * 60 + 30;
@@ -635,7 +635,7 @@
             }
         }
         if (x === 1) {
-            if (shape.j < 11 && board[shape.i][shape.j + 1] !== 4) {
+            if (shape.j < 9 && board[shape.i][shape.j + 1] !== 4) {
                 shape.j++;
             }
         }
@@ -848,9 +848,9 @@
                 monster.j=0;
             }
             else if(count_monsters === 1){
-                board[0][11]=12;
+                board[0][9]=12;
                 monster.i=0;
-                monster.j=11;
+                monster.j=9;
             }
             else if(count_monsters === 2){
                 board[19][0]=12;
@@ -909,7 +909,7 @@
                     chosen_j=monster.j-1;
                 }
             } 
-            if(monster.j < 11 && board[monster.i][monster.j+1]!=4 && board[monster.i][monster.j+1] < 50){
+            if(monster.j < 9 && board[monster.i][monster.j+1]!=4 && board[monster.i][monster.j+1] < 50){
                 var distanceDown =  Math.sqrt( Math.pow(monster.i-shape.i,2) + Math.pow(monster.j+1-shape.j,2));
                 if(distanceDown < distance_minimum){
                     distance_minimum = distanceDown;
