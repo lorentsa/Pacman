@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
         <link rel="stylesheet" type="text/css"  href="style.css" /> 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
+
 <body>
 
 <div id="divMain">
@@ -15,7 +17,6 @@
             <!-- <h5 id="loren">Loren Tsahalon</h5> -->
             <!-- <h5>Niv Dudovitch</h5> -->
     </header>
-
     <nav>
         <ul>
             <li><a button="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
@@ -26,16 +27,14 @@
     </nav>
 
     <footer>
-        <br>
-        created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
-        <br>
-        contact with the website developers:
-        <br>
-        loren: lorentsa@post.bgu.ac.il
-        <br>
-        niv: nivdu@post.bgu.ac.il
+            <br>
+            created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
+            <br>
+            contact with the website developers:
+            <br>
+            loren: lorentsa@post.bgu.ac.il | niv: nivdu@post.bgu.ac.il
     </footer>
-
+    
     <dialog id="about">
         <button onclick="CloseDialog()">X</button>
         <br>
@@ -51,13 +50,13 @@
                     Player Name:
                 </td>
                 <td>
-                    <input id="lblPlayerName" type="text" class = lbls/>
+                    <input id="lblPlayerName" type="text" class = "lbls"/>
                 </td>
                 <td>
                     Remain Life:
                 </td>
                 <td>
-                    <input id="lblRemainLife" type="text" class = lbls/>
+                    <input id="lblRemainLife" type="text" class = "lbls"/>
                 </td>
                 <td>
                     <input type="button" value="new-game" onclick="new_game()">
@@ -68,13 +67,13 @@
                     Score:
                 </td>
                 <td>
-                    <input id="lblScore" type="text" class = lbls/>
+                    <input id="lblScore" type="text" class = "lbls"/>
                 </td>
                 <td>
                     Time:
                 </td>
                 <td>
-                    <input id="lblTime" type="text" class = lbls/>
+                    <input id="lblTime" type="text" class = "lbls"/>
                 </td>
                 <td>
                     <input type="button" value="faster_monsters" onclick="faster_monsters()">
@@ -83,7 +82,7 @@
             </tr>
         </table>
         
-        <canvas id="canvas" height="800" width="1200"></canvas>
+        <canvas id="canvas" height="540" width="1200"></canvas>
 
     </div>
 
@@ -117,10 +116,10 @@
     <div id="log-in" style="visibility: hidden;" class="screens">
         <h1>Username: </h1>
         <br>
-        <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''">
+        <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''" class = "lbls">
         <h1>Password: </h1>
         <br>
-        <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''">
+        <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''" class = "lbls">
         <br>
         <br>
 
@@ -128,58 +127,107 @@
         document.getElementById('passw').value)">
     </div>
 
-
-    <div id="setting" style="visibility: hidden;">
+    <div id="setting" style="visibility: hidden;" class = "screens">
             
-        
-            UpButton:
-            <input id="up-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Up movement" onclick="c_up = updateUp()">
-            <br>
-            DownButton:
-            <input id="down-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Down movement" onclick="c_down = updateDown()">
-            <br>
-            RightButton:
-            <input id="right-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Right movement" onclick="c_right = updateRight()">
-            <br>
-            LeftButton:
-            <input id="left-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Left movement" onclick="c_left = updateLeft()">
-            <h4>Number of balls: (between 50 to 90) </h4>
-            <input id="num_of_balls" type="text" value="-None-" onclick="document.getElementById('num_of_balls').value=''">
-            <h4>Color of 25 ball: </h4>
-            <select name="list" id="colorList25">
-                <option value="red">red</option>
-                <option value="blue">blue</option>
-                <option value="black">black</option>
-            </select>
-            <h4>Color of 15 ball: </h4>
-            <select name="list" id="colorList15">
-                <option value="blue">blue</option>
-                <option value="red">red</option>
-                <option value="black">black</option>
-            </select>
-            <h4>Color of 5 ball: </h4>
-            <select name="list" id="colorList5">
-                <option value="black">black</option>
-                <option value="blue">blue</option>
-                <option value="red">red</option>
-            </select>
-            <h4>Number of monsters: (1-3) </h4>
-            <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''"> 
-            <h4>Game Time: </h4>
-            <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''">
-            <br>
-            <br>
-            <input type="button" value="Random" onclick="random()">
-            <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
-            document.getElementById('colorList25').value,document.getElementById('colorList15').value,
-            document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
+            <table id="Settingtable">
+                    <tr>
+                        <td>
+                                <input type="button" value="set Up movement" onclick="c_up = updateUp()">
+                        </td>
+                        <td>
+                                <input id="up-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="set Down movement" onclick="c_down = updateDown()">
+                        </td>
+                        <td>
+                                <input id="down-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="set Right movement" onclick="c_right = updateRight()">
+                        </td>
+                        <td>
+                                <input id="right-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>                        
+                        </tr>
+                        <tr>
+                        <td>
+                                <input type="button" value="set Left movement" onclick="c_left = updateLeft()">
+                        </td>
+                        <td>
+                                
+                                <input id="left-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>
+                            <h4>Number of balls: (between 50 to 90) </h4>
+                            </td>
+                            <td>
+                            <input id="num_of_balls" type="text" value="-None-" onclick="document.getElementById('num_of_balls').value=''" class = "lbls">
+                            </td>
+                            <td>
+                                    <h4>Color of 25 ball: </h4>
+                                    <select name="list" id="colorList25" >
+                                        <option value="red">red</option>
+                                        <option value="blue">blue</option>
+                                        <option value="black">black</option>
+                                    </select>
+                                    </td>
+                                    <td>
+                                    <h4>Color of 15 ball: </h4>
+                                    <select name="list" id="colorList15">
+                                        <option value="blue">blue</option>
+                                        <option value="red">red</option>
+                                        <option value="black">black</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <h4>Color of 5 ball: </h4>
+                                    <select name="list" id="colorList5">
+                                        <option value="black">black</option>
+                                        <option value="blue">blue</option>
+                                        <option value="red">red</option>
+                                    </select>
+                                    
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Number of monsters: (1-3) </h4>
+                        </td>
+                        <td>
+                            <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''" class = "lbls"> 
+                        </td>
+                        <td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h4>Game Time: </h4>
+                        </td>
+                        <td>
+                            <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''" class = "lbls">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="Random" onclick="random()">
+                        </td>
+                        <td>
+                            <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
+                                        document.getElementById('colorList25').value,document.getElementById('colorList15').value,
+                                        document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
+                        </td>
+                    </tr>
+                </table>
+                    
+            
         </div>
 </div>
-
 
 <script type="text/javascript">
     var context = canvas.getContext("2d");
@@ -477,7 +525,7 @@
         for (var i = 0; i < 20; i++) {
             board[i] = new Array();
             for (var j = 0; j < 10; j++) {
-              if((monsters_remain>0) && ((i===0 && j===0) || (i===19 && j===0) || (i===0 && j===9) || (i===19 && j===9))){
+              if((monsters_remain>0) && ((i===0 && j===0) || (i===19 && j===0) || (i===0 && j===9))){
                     board[i][j]=12;
                     var monster = new Object();
                     monster.i=i;
@@ -485,15 +533,28 @@
                     activeMonsters.push(monster);
                     monsters_remain--;
                 }
-                  else if (j==1 && (i==3 || i==4 || i==6 || i==7 || i==9)){
+                else if(i==10 && (j==3 || j==5)){
                     board[i][j] = 4;
-                } else if (j==3 && (i==3 || i==5 || i==6 || i==7 || i==9)){
+                }
+                else if(j==4 && (i>=3 && i<=16)){
                     board[i][j] = 4;
-                } else if (j==5 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                }
+                else if(i==18 && j==2){
                     board[i][j] = 4;
-                } else if (j==6 && (i==2 || i==5 || i==6 || i==7 || i==9)){
+                }
+                else if(i==11 && j==8){
                     board[i][j] = 4;
-                } else if (j==7 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                }
+                
+                  else if (j==1 && (i>=1 && i<=18 && i!=10)){
+                    board[i][j] = 4;
+                } else if (i==1 && j>=1 && j<=7 && j!=4){
+                    board[i][j] = 4;
+                } else if (j==5 && i==0){
+                    board[i][j] = 4;
+                } else if (j==6 && i==18){
+                    board[i][j] = 4;
+                } else if (j==7 && (i>=1 && i<=18 && i!=10)){
                     board[i][j] = 4;
                 } else if (j==3 && (i==19 || i==18)){
                     board[i][j] = 4;
@@ -653,7 +714,7 @@
                     teleport.style.width=60;
                     context.drawImage(teleport,x,y);
                     } 
-                    else if(i==0 && j==6){//if(shape.i==19 && shape.j==4){ 0,6
+                    else if(i==19 && j==6){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
                     var x=center.x-30;
@@ -685,7 +746,7 @@
                 } else if (board[i][j] === 4) {
                     context.beginPath();
                     context.rect(center.x - 30, center.y - 30, 60, 60);
-                    context.fillStyle = "grey"; //color
+                    context.fillStyle = "black"; //color
                     context.fill();
                 } else if(board[i][j] === 12 || board[i][j] === 13 || board[i][j] === 14 || board[i][j] === 15){
                     //draw monster
@@ -758,7 +819,11 @@
             }
         }
         if (x === 3) {
-            if(shape.i==0 && shape.j==6){
+            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+                shape.i--;
+            }
+        }
+        if(shape.i==19 && shape.j==6){
                 if(board[shape.i][shape.j]==1){
                     score+=25;
                 }
@@ -787,10 +852,6 @@
                 board[shape.i][shape.j] = 0;
                 shape.i=18;
                 shape.j=4;
-            }
-            else if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
-                shape.i--;
-            }
         }
         if(shape.i==19 && shape.j==4){
                 if(board[shape.i][shape.j]==1){
@@ -819,8 +880,8 @@
                 board[shape.i][shape.j] = 10;
                 Draw();
                 board[shape.i][shape.j] = 0;
-                shape.i=0;
-                shape.j=6;
+                shape.i=19;
+                shape.j=7;
                 b = true;
             }
             
