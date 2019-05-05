@@ -266,6 +266,7 @@
     var interval_time_monster;
     var MonsterHitSound;
     var timeOverSound;  
+    
 
     class User{
         constructor(username,password,fName,lName,email,bDate) {
@@ -437,7 +438,7 @@
     }
 
     function random(){
-        this.gameTime = 15;
+        this.gameTime = 35;
         ball_25 = 'red';
         ball_15 = 'green';
         ball_5 = 'black';    
@@ -446,7 +447,7 @@
         c_right='ArrowRight';
         c_left='ArrowLeft';
         this.number_Of_monsters=2;
-        balls_number=50;
+        balls_number=75;
         Start();
         ShowSection('game');
     }
@@ -540,19 +541,18 @@
                     board[i][j] = 4;
                 }
                 else if(i==18 && j==2){
-                    board[i][j] = 4;
+                    
                 }
                 else if(i==11 && j==8){
                     board[i][j] = 4;
                 }
-                
-                  else if (j==1 && (i>=1 && i<=18 && i!=10)){
+                  else if (j==1 && (i>=1 && i<=18 && i!=10 && i!=4 && i!=7 && i!=13 && i!=15)){
                     board[i][j] = 4;
-                } else if (i==1 && j>=1 && j<=7 && j!=4){
+                } else if (i==1 && j>=1 && j<=7 && j!=4 && j!=6 && j!=2){
                     board[i][j] = 4;
                 } else if (j==6 && i==18){
                     board[i][j] = 4;
-                } else if (j==7 && (i>=1 && i<=18 && i!=10)){
+                } else if (j==7 && (i>=1 && i<=18 && i!=10 && i!=7 && i!=4 )){
                     board[i][j] = 4;
                 } else if (j==3 && (i==19 || i==18)){
                     board[i][j] = 4;
@@ -920,7 +920,7 @@
         if(time_elapsed<5){
             timeOverSound.play();
         }
-        if (score >= 160 && (currentTime - start_time)/1000 <= 10) {
+        if (score >= 300 && (currentTime - start_time)/1000 <= 10) {
             pac_color = "green";
         }
         if (!gameOver && (number_of_eating1 === balls_number || time_elapsed<=0)) {
