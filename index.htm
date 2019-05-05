@@ -550,8 +550,6 @@
                     board[i][j] = 4;
                 } else if (i==1 && j>=1 && j<=7 && j!=4){
                     board[i][j] = 4;
-                } else if (j==5 && i==0){
-                    board[i][j] = 4;
                 } else if (j==6 && i==18){
                     board[i][j] = 4;
                 } else if (j==7 && (i>=1 && i<=18 && i!=10)){
@@ -714,7 +712,7 @@
                     teleport.style.width=60;
                     context.drawImage(teleport,x,y);
                     } 
-                    else if(i==19 && j==6){//if(shape.i==19 && shape.j==4){ 0,6
+                    else if(i==12 && j==8){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
                     var x=center.x-30;
@@ -823,7 +821,7 @@
                 shape.i--;
             }
         }
-        if(shape.i==19 && shape.j==6){
+        if(shape.i==12 && shape.j==8){
                 if(board[shape.i][shape.j]==1){
                     score+=25;
                 }
@@ -880,8 +878,8 @@
                 board[shape.i][shape.j] = 10;
                 Draw();
                 board[shape.i][shape.j] = 0;
-                shape.i=19;
-                shape.j=7;
+                shape.i=13;
+                shape.j=8;
                 b = true;
             }
             
