@@ -7,125 +7,129 @@
 </head>
 <body>
 
-        <header>
-            <!DOCTYPE html>
-        <html>
-        
-        <head>
-                <link rel="stylesheet" type="text/css"  href="style.css" /> 
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        </head>
-        
-        <body>
-        
-        <header>
+<div id="divMain">
+    <header>
             <img src="pacman.png" id="pacman">
             Wrote by: Loren Tsahalon & Niv Dudovitch
             <h1 id="pacmanTitle" >Pacman</h1>
             <!-- <h5 id="loren">Loren Tsahalon</h5> -->
             <!-- <h5>Niv Dudovitch</h5> -->
-        </header>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a button="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
+            <li><a button="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
+            <li><a button="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
+            <li><a button="#about" onclick="ShowDialog()">About</a></li>
+        </ul>
+    </nav>
+
+    <footer>
+        <br>
+        created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
+        <br>
+        contact with the website developers:
+        <br>
+        loren: lorentsa@post.bgu.ac.il
+        <br>
+        niv: nivdu@post.bgu.ac.il
+    </footer>
+
+    <dialog id="about">
+        <button onclick="CloseDialog()">X</button>
+        <br>
+        Niv Dudovitch
+        <br>
+        Loren Tsahalon
+    </dialog>
+
+    <div id="game" style="visibility: hidden;" class="screens">
+        <table id="table">
+            <tr>
+                <td>
+                    Player Name:
+                </td>
+                <td>
+                    <input id="lblPlayerName" type="text" class = lbls/>
+                </td>
+                <td>
+                    Remain Life:
+                </td>
+                <td>
+                    <input id="lblRemainLife" type="text" class = lbls/>
+                </td>
+                <td>
+                    <input type="button" value="new-game" onclick="new_game()">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Score:
+                </td>
+                <td>
+                    <input id="lblScore" type="text" class = lbls/>
+                </td>
+                <td>
+                    Time:
+                </td>
+                <td>
+                    <input id="lblTime" type="text" class = lbls/>
+                </td>
+                <td>
+                    <input type="button" value="faster_monsters" onclick="faster_monsters()">
+                </td>
+
+            </tr>
+        </table>
         
-        
-        
-        <nav>
-            <ul>
-                <li><a button="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
-                <li><a button="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
-                <li><a button="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
-                <li><a button="#about" onclick="ShowDialog()">About</a></li>
-            </ul>
-        </nav>
-        
-        <footer>
-            <br>
-            created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
-            <br>
-            contact with the website developers:
-            <br>
-            loren: lorentsa@post.bgu.ac.il
-            <br>
-            niv: nivdu@post.bgu.ac.il
-        </footer>
-        
-        <dialog id="about">
-            <button onclick="CloseDialog()">X</button>
-            <br>
-            Niv Dudovitch
-            <br>
-            Loren Tsahalon
-        </dialog>
-        
-        <div id="game" style="visibility: hidden;">
-            <br/>
-            Player Name:
-            <input id="lblPlayerName" type="text" class = lbls/>
-            <br/>
-            SCORE:
-            <input id="lblScore" type="text" class = lbls/>
-            <br/>
-            remain life:
-            <input id="lblRemainLife" type="text" class = lbls/>
-            <br/>
-            TIME:
-            <input id="lblTime" type="text" class = lbls/>
-            <br/>
-            <input type="button" value="new-game" onclick="new_game()">
-            <br/>
-            <input type="button" value="faster_monsters" onclick="faster_monsters()">
-            <br/>
-            <canvas id="canvas" height="800" width="1200"></canvas>
-        
-        </div>
-        
-        <div id="welcome" style="visibility: visible;">
-            <input type="button" value="log-in" onclick="ShowSection('log-in')">
-            <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
-            <br>
-            <img src="play.png" high="200px" width="500px">
-        </div>
-        
-        <div id="sign-up" style="visibility: hidden;">
-            <h4>Username: </h4>
-            <input id="uName" type="text" class="check">
-            <br>
-            <h4>Password: </h4>
-            <input id="pass" type="password" class="check">
-            <br>
-            <h4>First Name: </h4>
-            <input id="fName" type="text" class="check">
-            <br>
-            <h4>Last Name: </h4>
-            <input id="lName" type="text" class="check">
-            <br>
-            <h4>Email: </h4>
-            <input id="mail" type = "email" placeholder = "name@domain.com" class="check"> 
-            <br>
-            <h4>Birth Date: </h4>
-            <input id="bdate" type="date" class="check">
-            <br>
-        
-            <input type="button" value="Sign up" onclick="AddUser(document.getElementById('uName').value,document.getElementById('pass').value,
-            document.getElementById('fName').value,document.getElementById('lName').value,document.getElementById('mail').value,document.getElementById('bdate').value)">
-            
-        </div>
-        
-        <div id="log-in" style="visibility: hidden;">
-            <h1>Username: </h1>
-            <br>
-            <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''">
-            <h1>Password: </h1>
-            <br>
-            <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''">
-            <br>
-            <br>
-        
-            <input type="button" value="sign-in" onclick="CheckSignIn(document.getElementById('username').value,
-            document.getElementById('passw').value)">
-        </div>
-        
-        
-        <div id="setting" style="visibility: hidden;">
+        <canvas id="canvas" height="800" width="1200"></canvas>
+
+    </div>
+
+    <div id="welcome" style="visibility: visible;" class="screens">
+        <input type="button" value="log-in" onclick="ShowSection('log-in')">
+        <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
+        <br>
+        <img src="play.png" high="200px" width="500px">
+    </div>
+
+    <div id="sign-up" style="visibility: hidden;" class="screens">
+        <form>
+        <h4>Username: </h4>
+        <input id="uName" type="text" class="check">
+        <h4>Password: </h4>
+        <input id="pass" type="password" class="check">
+        <h4>First Name: </h4>
+        <input id="fName" type="text" class="check">
+        <h4>Last Name: </h4>
+        <input id="lName" type="text" class="check">
+        <h4>Email: </h4>
+        <input id="mail" type = "email" placeholder = "name@domain.com" class="check"> 
+        <h4>Birth Date: </h4>
+        <input id="bdate" type="date" class="check">
+
+        <input type="submit" value="Submit" onclick="AddUser(document.getElementById('uName').value,document.getElementById('pass').value,
+        document.getElementById('fName').value,document.getElementById('lName').value,document.getElementById('mail').value,document.getElementById('bdate').value)">
+        </form>
+    </div>
+
+    <div id="log-in" style="visibility: hidden;" class="screens">
+        <h1>Username: </h1>
+        <br>
+        <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''">
+        <h1>Password: </h1>
+        <br>
+        <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''">
+        <br>
+        <br>
+
+        <input type="button" value="sign-in" onclick="CheckSignIn(document.getElementById('username').value,
+        document.getElementById('passw').value)">
+    </div>
+
+
+    <div id="setting" style="visibility: hidden;">
             
         
             UpButton:
@@ -174,6 +178,9 @@
             document.getElementById('colorList25').value,document.getElementById('colorList15').value,
             document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
         </div>
+</div>
+
+
 <script type="text/javascript">
     var context = canvas.getContext("2d");
     var shape = new Object();
@@ -239,6 +246,79 @@
         }
     }
 
+    
+	// $.validator.setDefaults({
+	// 	submitHandler: function() {
+	// 		alert("submitted!");
+	// 	}
+	// });
+
+	// $().ready(function() {
+
+	// 	// validate signup form on keyup and submit
+	// 	$("#signupForm").validate({
+	// 		rules: {
+	// 			fName: "required",
+	// 			lName: "required",
+	// 			uName: "required",
+	// 			pass: {
+	// 				required: true,
+	// 				minlength: 8
+	// 			},
+	// 			mail: {
+	// 				required: true,
+	// 				email: true
+	// 			},
+	// 			bdate: {
+	// 				required: true,
+	// 				minlength: 2
+	// 			},
+	// 			agree: "required"
+	// 		},
+	// 		messages: {
+	// 			firstname: "Please enter your firstname",
+	// 			lastname: "Please enter your lastname",
+	// 			username: {
+	// 				required: "Please enter a username",
+	// 				minlength: "Your username must consist of at least 2 characters"
+	// 			},
+	// 			password: {
+	// 				required: "Please provide a password",
+	// 				minlength: "Your password must be at least 5 characters long"
+	// 			},
+	// 			confirm_password: {
+	// 				required: "Please provide a password",
+	// 				minlength: "Your password must be at least 5 characters long",
+	// 				equalTo: "Please enter the same password as above"
+	// 			},
+	// 			email: "Please enter a valid email address",
+	// 			agree: "Please accept our policy",
+	// 			topic: "Please select at least 2 topics"
+	// 		}
+	// 	});
+
+	// 	// propose username by combining first- and lastname
+	// 	$("#username").focus(function() {
+	// 		var firstname = $("#firstname").val();
+	// 		var lastname = $("#lastname").val();
+	// 		if (firstname && lastname && !this.value) {
+	// 			this.value = firstname + "." + lastname;
+	// 		}
+	// 	});
+
+	// 	//code to hide topic selection, disable for demo
+	// 	var newsletter = $("#newsletter");
+	// 	// newsletter topics are optional, hide at first
+	// 	var inital = newsletter.is(":checked");
+	// 	var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+	// 	var topicInputs = topics.find("input").attr("disabled", !inital);
+	// 	// show when newsletter is checked
+	// 	newsletter.click(function() {
+	// 		topics[this.checked ? "removeClass" : "addClass"]("gray");
+	// 		topicInputs.attr("disabled", !this.checked);
+	// 	});
+	// });
+	
 
     $(document).ready(function(){
         users = new Array();
