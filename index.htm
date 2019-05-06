@@ -1,10 +1,16 @@
 <!DOCTYPE html>
+
 <html>
 
 <head>
         <link rel="stylesheet" type="text/css"  href="style.css" /> 
+        <script src="jquery.js" type="text/javascript"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+        <!-- $.noConflict(); -->
 </head>
+
 <body>
 
 <div id="divMain">
@@ -12,10 +18,7 @@
             <img src="pacman.png" id="pacman">
             Wrote by: Loren Tsahalon & Niv Dudovitch
             <h1 id="pacmanTitle" >Pacman</h1>
-            <!-- <h5 id="loren">Loren Tsahalon</h5> -->
-            <!-- <h5>Niv Dudovitch</h5> -->
     </header>
-
     <nav>
         <ul>
             <li><a button="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
@@ -26,16 +29,14 @@
     </nav>
 
     <footer>
-        <br>
-        created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
-        <br>
-        contact with the website developers:
-        <br>
-        loren: lorentsa@post.bgu.ac.il
-        <br>
-        niv: nivdu@post.bgu.ac.il
+            <br>
+            created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
+            <br>
+            contact with the website developers:
+            <br>
+            loren: lorentsa@post.bgu.ac.il | niv: nivdu@post.bgu.ac.il
     </footer>
-
+    
     <dialog id="about">
         <button onclick="CloseDialog()">X</button>
         <br>
@@ -51,13 +52,13 @@
                     Player Name:
                 </td>
                 <td>
-                    <input id="lblPlayerName" type="text" class = lbls/>
+                    <input id="lblPlayerName" type="text" class = "lbls"/>
                 </td>
                 <td>
                     Remain Life:
                 </td>
                 <td>
-                    <input id="lblRemainLife" type="text" class = lbls/>
+                    <input id="lblRemainLife" type="text" class = "lbls"/>
                 </td>
                 <td>
                     <input type="button" value="new-game" onclick="new_game()">
@@ -68,13 +69,13 @@
                     Score:
                 </td>
                 <td>
-                    <input id="lblScore" type="text" class = lbls/>
+                    <input id="lblScore" type="text" class = "lbls"/>
                 </td>
                 <td>
                     Time:
                 </td>
                 <td>
-                    <input id="lblTime" type="text" class = lbls/>
+                    <input id="lblTime" type="text" class = "lbls"/>
                 </td>
                 <td>
                     <input type="button" value="faster_monsters" onclick="faster_monsters()">
@@ -83,7 +84,7 @@
             </tr>
         </table>
         
-        <canvas id="canvas" height="540" width="1260"></canvas>
+        <canvas id="canvas" height="540" width="1200"></canvas>
 
     </div>
 
@@ -95,32 +96,31 @@
     </div>
 
     <div id="sign-up" style="visibility: hidden;" class="screens">
-        <form>
+        <form id = "sign_up_form" method = "get" action = "">
         <h4>Username: </h4>
-        <input id="uName" type="text" class="check">
+        <input id="uName" name="uName" type="text" class="check">
         <h4>Password: </h4>
-        <input id="pass" type="password" class="check">
+        <input id="pass" name="pass" type="password" class="check">
         <h4>First Name: </h4>
-        <input id="fName" type="text" class="check">
+        <input id="fName" name="fName" type="text" class="check">
         <h4>Last Name: </h4>
-        <input id="lName" type="text" class="check">
+        <input id="lName" name="lName" type="text" class="check">
         <h4>Email: </h4>
-        <input id="mail" type = "email" placeholder = "name@domain.com" class="check"> 
+        <input id="mail" name="mail" type = "email" placeholder = "name@domain.com" class="check"> 
         <h4>Birth Date: </h4>
-        <input id="bdate" type="date" class="check">
-
-        <input type="submit" value="Submit" onclick="AddUser(document.getElementById('uName').value,document.getElementById('pass').value,
-        document.getElementById('fName').value,document.getElementById('lName').value,document.getElementById('mail').value,document.getElementById('bdate').value)">
+        <input id="bdate" name="bdate" type="date" class="check">
+        
+        <input type="submit" value="Submit">
         </form>
     </div>
 
     <div id="log-in" style="visibility: hidden;" class="screens">
         <h1>Username: </h1>
         <br>
-        <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''">
+        <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''" class = "lbls">
         <h1>Password: </h1>
         <br>
-        <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''">
+        <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''" class = "lbls">
         <br>
         <br>
 
@@ -128,58 +128,107 @@
         document.getElementById('passw').value)">
     </div>
 
-
-    <div id="setting" style="visibility: hidden;" class="screens">
+    <div id="setting" style="visibility: hidden;" class = "screens">
             
-        
-            UpButton:
-            <input id="up-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Up movement" onclick="c_up = updateUp()">
-            <br>
-            DownButton:
-            <input id="down-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Down movement" onclick="c_down = updateDown()">
-            <br>
-            RightButton:
-            <input id="right-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Right movement" onclick="c_right = updateRight()">
-            <br>
-            LeftButton:
-            <input id="left-controll" type="text" class = "lbls" value="choosen-key"/>
-            <input type="button" value="set Left movement" onclick="c_left = updateLeft()">
-            <h4>Number of balls: (between 50 to 90) </h4>
-            <input id="num_of_balls" type="text" value="-None-" onclick="document.getElementById('num_of_balls').value=''">
-            <h4>Color of 25 ball: </h4>
-            <select name="list" id="colorList25">
-                <option value="red">red</option>
-                <option value="blue">blue</option>
-                <option value="black">black</option>
-            </select>
-            <h4>Color of 15 ball: </h4>
-            <select name="list" id="colorList15">
-                <option value="blue">blue</option>
-                <option value="red">red</option>
-                <option value="black">black</option>
-            </select>
-            <h4>Color of 5 ball: </h4>
-            <select name="list" id="colorList5">
-                <option value="black">black</option>
-                <option value="blue">blue</option>
-                <option value="red">red</option>
-            </select>
-            <h4>Number of monsters: (1-3) </h4>
-            <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''"> 
-            <h4>Game Time: </h4>
-            <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''">
-            <br>
-            <br>
-            <input type="button" value="Random" onclick="random()">
-            <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
-            document.getElementById('colorList25').value,document.getElementById('colorList15').value,
-            document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
+            <table id="Settingtable">
+                    <tr>
+                        <td>
+                                <input type="button" value="set Up movement" onclick="c_up = updateUp()">
+                        </td>
+                        <td>
+                                <input id="up-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="set Down movement" onclick="c_down = updateDown()">
+                        </td>
+                        <td>
+                                <input id="down-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="set Right movement" onclick="c_right = updateRight()">
+                        </td>
+                        <td>
+                                <input id="right-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>                        
+                        </tr>
+                        <tr>
+                        <td>
+                                <input type="button" value="set Left movement" onclick="c_left = updateLeft()">
+                        </td>
+                        <td>
+                                
+                                <input id="left-controll" type="text" class = "lbls" value="choosen-key"/>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>
+                            <h4>Number of balls: (between 50 to 90) </h4>
+                            </td>
+                            <td>
+                            <input id="num_of_balls" type="text" value="-None-" onclick="document.getElementById('num_of_balls').value=''" class = "lbls">
+                            </td>
+                            <td>
+                                    <h4>Color of 25 ball: </h4>
+                                    <select name="list" id="colorList25" >
+                                        <option value="red">red</option>
+                                        <option value="blue">blue</option>
+                                        <option value="black">black</option>
+                                    </select>
+                                    </td>
+                                    <td>
+                                    <h4>Color of 15 ball: </h4>
+                                    <select name="list" id="colorList15">
+                                        <option value="blue">blue</option>
+                                        <option value="red">red</option>
+                                        <option value="black">black</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <h4>Color of 5 ball: </h4>
+                                    <select name="list" id="colorList5">
+                                        <option value="black">black</option>
+                                        <option value="blue">blue</option>
+                                        <option value="red">red</option>
+                                    </select>
+                                    
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Number of monsters: (1-3) </h4>
+                        </td>
+                        <td>
+                            <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''" class = "lbls"> 
+                        </td>
+                        <td>
+                            </tr>
+                            <tr>
+                            <td>
+                            <h4>Game Time: </h4>
+                        </td>
+                        <td>
+                            <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''" class = "lbls">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                                <input type="button" value="Random" onclick="random()">
+                        </td>
+                        <td>
+                            <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
+                                        document.getElementById('colorList25').value,document.getElementById('colorList15').value,
+                                        document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
+                        </td>
+                    </tr>
+                </table>
+                    
+            
         </div>
 </div>
-
 
 <script type="text/javascript">
     var context = canvas.getContext("2d");
@@ -205,7 +254,7 @@
     var time_elapsed;
     var interval;
     var interval_monsters;
-    var users;
+    var users = new Array();
     var playSound;
     var winSound;
     var lostSound;
@@ -215,11 +264,12 @@
     var number_Of_monsters;
     var count_of_monsters_fast=1000;
     var time_monster;
-    var bonus_monster;
     var interval_time_monster;
-    var interval_bonus_monster;
     var MonsterHitSound;
-    var timeOverSound;  
+    var timeOverSound;
+    var bonus_monster;
+    var interval_bonus_monster;  
+    
 
     class User{
         constructor(username,password,fName,lName,email,bDate) {
@@ -248,98 +298,100 @@
         }
     }
 
-    
-	// $.validator.setDefaults({
-	// 	submitHandler: function() {
-	// 		alert("submitted!");
-	// 	}
-	// });
-
-	// $().ready(function() {
-
-	// 	// validate signup form on keyup and submit
-	// 	$("#signupForm").validate({
-	// 		rules: {
-	// 			fName: "required",
-	// 			lName: "required",
-	// 			uName: "required",
-	// 			pass: {
-	// 				required: true,
-	// 				minlength: 8
-	// 			},
-	// 			mail: {
-	// 				required: true,
-	// 				email: true
-	// 			},
-	// 			bdate: {
-	// 				required: true,
-	// 				minlength: 2
-	// 			},
-	// 			agree: "required"
-	// 		},
-	// 		messages: {
-	// 			firstname: "Please enter your firstname",
-	// 			lastname: "Please enter your lastname",
-	// 			username: {
-	// 				required: "Please enter a username",
-	// 				minlength: "Your username must consist of at least 2 characters"
-	// 			},
-	// 			password: {
-	// 				required: "Please provide a password",
-	// 				minlength: "Your password must be at least 5 characters long"
-	// 			},
-	// 			confirm_password: {
-	// 				required: "Please provide a password",
-	// 				minlength: "Your password must be at least 5 characters long",
-	// 				equalTo: "Please enter the same password as above"
-	// 			},
-	// 			email: "Please enter a valid email address",
-	// 			agree: "Please accept our policy",
-	// 			topic: "Please select at least 2 topics"
-	// 		}
-	// 	});
-
-	// 	// propose username by combining first- and lastname
-	// 	$("#username").focus(function() {
-	// 		var firstname = $("#firstname").val();
-	// 		var lastname = $("#lastname").val();
-	// 		if (firstname && lastname && !this.value) {
-	// 			this.value = firstname + "." + lastname;
-	// 		}
-	// 	});
-
-	// 	//code to hide topic selection, disable for demo
-	// 	var newsletter = $("#newsletter");
-	// 	// newsletter topics are optional, hide at first
-	// 	var inital = newsletter.is(":checked");
-	// 	var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
-	// 	var topicInputs = topics.find("input").attr("disabled", !inital);
-	// 	// show when newsletter is checked
-	// 	newsletter.click(function() {
-	// 		topics[this.checked ? "removeClass" : "addClass"]("gray");
-	// 		topicInputs.attr("disabled", !this.checked);
-	// 	});
-	// });
-	
-
     $(document).ready(function(){
-        users = new Array();
-        var user = new User('a','a','a','a','a@a.a','1.1.1991');
-        users.push(user);
+        users.push(new User('a','a','a','a','a@a.a','1.1.1991'));        
     })
 
+    $(document).ready(function(){
+    // validate signup form on keyup and submit
+        $("#sign_up_form").validate({
+            rules: {
+                fName: { 
+                    required:true,
+                    checkOnlyLetters: true,
+                },
+                lName: {
+                    required:true,
+                    checkOnlyLetters: true,
+                },
+                uName: {
+                    required: true,
+                    isUserNotExists: true,
+                },
+                pass: {
+                    required: true,
+                    minlength: 8,
+                    isLegalPass: true,
+                },
+                mail: {
+                    required: true,
+                    email: true
+                },
+                bdate: {
+                    required: true,
+                    minlength: 2,
+                    //to-do check bdate
+                },
+            },
+            messages: {
+                fName: {
+                    required: "Please enter your firstname",
+                    checkOnlyLetters: "first name must include only letters",
+                    },
+                lName: {
+                    required: "Please enter your lastname",
+                    checkOnlyLetters: "last name must include only letters",
+                },
+                uName: {
+                    required: "Please enter a username",
+                    isUserNotExists: "this username already exists",
+                },
+                pass: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 8 characters long",
+                    isLegalPass: "the password must include only letters and digits",
+                },
+                mail: {
+                    required: "Please enter a valid email address2",
+                    email: "Please enter a valid email address1",
+                },
+                bdate: {
+                    required: "Please enter your birth date",
+                    minlength: "Please enter your birth date",
+                },
+            },
+
+            submitHandler : function(form) {
+                AddUser(document.getElementById('uName').value,document.getElementById('pass').value,
+                document.getElementById('fName').value,document.getElementById('lName').value,document.getElementById('mail').value,document.getElementById('bdate').value);
+                //form.submit();
+            },
+
+        });    
+
+        $.validator.addMethod("checkOnlyLetters", function(value , element) {
+            return this.optional(element)|| /^[a-z][a-z\s]*$/.test(value);
+        });
+        
+        $.validator.addMethod("isUserNotExists", function(value , element) {
+        return this.optional(element)|| !(value in users);
+        });
+
+        $.validator.addMethod("isLegalPass", function(value , element) {
+            return this.optional(element)|| /[A-Za-z]/i.test(value) && /\d/.test(value);
+        });
+    })
+
+    
+
+
+    
     function AddUser(username,password,fName,lName,email,bdate){
-        if(!validateFillFields('.signupFields')){
-            window.alert("All fields have to be fill!")
-        }
-        else if(fName.value.matches(".\\d.")|| lName.value.matches(".\\d.")){
-            window.alert("First and Last name can't contain numbers!")
-        }
-        else{
-            var user = new User(username,password,fName,lName,email,bdate);
-            users.push(user);
-            ShowSection('setting');
-        }
+        var user = new User(username,password,fName,lName,email,bdate);
+        users.push(user);
+        currUser=user;
+        ShowSection('setting');
+
     }
 
     function CheckSignIn(username,password){
@@ -391,7 +443,7 @@
     }
 
     function random(){
-        this.gameTime = 15;
+        this.gameTime = 10;
         ball_25 = 'red';
         ball_15 = 'green';
         ball_5 = 'black';    
@@ -400,17 +452,18 @@
         c_right='ArrowRight';
         c_left='ArrowLeft';
         this.number_Of_monsters=2;
-        balls_number=50;
+        balls_number=75;
         Start();
         ShowSection('game');
     }
 
     function ShowSection(id)
     {
-        if(gameOver==false && id!='game'){//to-do check the plaster
+        if(gameOver==false && id!='game'){
             window.clearInterval(interval);
             window.clearInterval(interval_monsters);
             window.clearInterval(interval_time_monster);
+            window.clearInterval(interval_bonus_monster);
             stopAllSounds();
         }
     	//hide all sections
@@ -449,7 +502,6 @@
     //14-monster_on_food_15
     //15-monster_on_food_5
     //50-time_monster
-    //100-bonus_monster
 
 
     function Start() {
@@ -466,7 +518,6 @@
         number_of_eating = 0;
         pac_color = "yellow";
         var food_remain = balls_number;
-        //to-do food of scores
         var food_25_remain = balls_number*0.6;
         food_25_remain = Math.floor(food_25_remain);
         var food_15_remain = balls_number*0.3;
@@ -477,10 +528,10 @@
         var monsters_remain = number_Of_monsters;
         activeMonsters = new Array();
         start_time = new Date();
-        for (var i = 0; i < 21; i++) {
+        for (var i = 0; i < 20; i++) {
             board[i] = new Array();
             for (var j = 0; j < 9; j++) {
-              if((monsters_remain>0) && ((i===0 && j===0) || (i===20 && j===0) || (i===0 && j===8) || (i===20 && j===8))){
+              if((monsters_remain>0) && ((i===0 && j===0) || (i===19 && j===0) || (i===0 && j===8))){
                     board[i][j]=12;
                     var monster = new Object();
                     monster.i=i;
@@ -488,54 +539,50 @@
                     activeMonsters.push(monster);
                     monsters_remain--;
                 }
-                  else if (j==1 && (i==3 || i==4 || i==6 || i==7 || i==9)){
+                else if(i==10 && (j==3 || j==5)){
                     board[i][j] = 4;
-                } else if (j==3 && (i==3 || i==5 || i==6 || i==7 || i==9)){
+                }
+                else if(j==4 && (i>=3 && i<=16 && i!=7 && i!=13)){
                     board[i][j] = 4;
-                } else if (j==5 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                }
+                else if(i==18 && j==2){
+                    
+                }
+                else if(i==11 && j==8){
                     board[i][j] = 4;
-                } else if (j==6 && (i==2 || i==5 || i==6 || i==7 || i==9)){
+                }
+                  else if (j==1 && (i>=1 && i<=18 && i!=10 && i!=4 && i!=7 && i!=13 && i!=15)){
                     board[i][j] = 4;
-                } else if (j==7 && (i==0 || i==1 || i==2 || i==7 || i==9)){
+                } else if (i==1 && j>=1 && j<=7 && j!=4 && j!=6 && j!=2){
                     board[i][j] = 4;
-                } else if (j==3 && (i==19 || i==20)){
+                } else if (j==6 && i==18){
                     board[i][j] = 4;
-                } else if (j==5 && (i==19 || i==20)){
+                } else if (j==7 && (i>=1 && i<=18 && i!=10 && i!=7 && i!=4 )){
+                    board[i][j] = 4;
+                } else if (j==3 && (i==19 || i==18)){
+                    board[i][j] = 4;
+                } else if (j==5 && (i==19 || i==18)){
                     board[i][j] = 4;
                 } else {
-                    // var randomNum = Math.random();
-                    // if(food_25_remain>0 && randomNum >=0.7){
-                    //     food_remain--;
-                    //     food_25_remain--;
-                    //     board[i][j] = 1;
-                    // }
-                    // else if(food_15_remain>0 && randomNum>=0.5){
-                    //     food_remain--;
-                    //     food_15_remain--;
-                    //     board[i][j] = 2;
-                    // }
-                    // else if(food_5_remain>=0.3){
-                    //     food_remain--;
-                    //     food_5_remain--;
-                    //     board[i][j] = 3;
-                    // }
-                    // else {
                         board[i][j] = 0;
                 }
             }
         }
+        //pacman
         var emptyCell = findRandomEmptyCell(board);
         board[emptyCell[0]][emptyCell[1]] = 10;
         shape.i=emptyCell[0];
         shape.j=emptyCell[1];
         var emptyCell = findRandomEmptyCell(board);
+        //time monster
         board[emptyCell[0]][emptyCell[1]] = 50;
         time_monster = new Object();
         time_monster.i=emptyCell[0];
         time_monster.j=emptyCell[1];
-        emptyCell = findRandomEmptyCell(board);
+        var emptyCell = findRandomEmptyCell(board);
+        //bonus monster
         board[emptyCell[0]][emptyCell[1]] = 100;
-        bonus_monster=new Object();
+        bonus_monster = new Object();
         bonus_monster.i=emptyCell[0];
         bonus_monster.j=emptyCell[1];
         while (food_remain > 0) {
@@ -570,16 +617,15 @@
         }, false);
         interval = setInterval(UpdatePosition, 5);
         interval_monsters = setInterval(ChangeLocationsOfMonsters, count_of_monsters_fast);
-        interval_time_monster = setInterval(changeLocationOfTimeMonster, 700);
-        interval_bonus_monster= setInterval(changeLocationOfBonusMonster, 700);
+        interval_time_monster = setInterval(changeLocationOfTimeMonster, 250);
+        interval_bonus_monster = setInterval(changeLocationOfBonusMonster, 250);
     }
 
-
     function findRandomEmptyCell(board) {
-        var i = Math.floor((Math.random() * 21));
+        var i = Math.floor((Math.random() * 20));
         var j = Math.floor((Math.random() * 9));
         while (board[i][j] !== 0) {
-            i = Math.floor((Math.random() * 21));
+            i = Math.floor((Math.random() * 20));
             j = Math.floor((Math.random() * 9));
         }
         return [i, j];
@@ -613,7 +659,7 @@
         lblRemainLife.value = remain_life;
         lblScore.value = score;
         lblTime.value = parseFloat(time_elapsed).toFixed(2);//fixed time show only 2 digits after the dot. like -- > 1.12
-        for (var i = 0; i < 21; i++) {
+        for (var i = 0; i < 20; i++) {
             for (var j = 0; j < 9; j++) {
                 var center = new Object();
                 center.x = i * 60 + 30;
@@ -653,7 +699,7 @@
                     context.fillStyle = "black"; //color
                     context.fill();
                 } 
-                    else if(i==20 && j==4){//if(shape.i==19 && shape.j==4){ 0,6
+                    else if(i==19 && j==4){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
                     var x=center.x-30;
@@ -662,7 +708,7 @@
                     teleport.style.width=60;
                     context.drawImage(teleport,x,y);
                     } 
-                    else if(i==0 && j==6){//if(shape.i==19 && shape.j==4){ 0,6
+                    else if(i==12 && j==8){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
                     var x=center.x-30;
@@ -670,9 +716,7 @@
                     teleport.style.height=60;
                     teleport.style.width=60;
                     context.drawImage(teleport,x,y);
-
-                    } 
-                    
+                    }
                     else if (board[i][j] === 1) {
                     food_counter++;
                     context.beginPath();
@@ -694,7 +738,7 @@
                 } else if (board[i][j] === 4) {
                     context.beginPath();
                     context.rect(center.x - 30, center.y - 30, 60, 60);
-                    context.fillStyle = "grey"; //color
+                    context.fillStyle = "black"; //color
                     context.fill();
                 } else if(board[i][j] === 12 || board[i][j] === 13 || board[i][j] === 14 || board[i][j] === 15){
                     //draw monster
@@ -763,7 +807,6 @@
             number_of_eating++;
             Time_monster_hit();
         }
-
         if(board[shape.i][shape.j] === 100){
             b=true;
             number_of_eating++;
@@ -783,7 +826,6 @@
             number_of_eating++;
             Bonus_monster_hit();
         }
-
         board[shape.i][shape.j] = 0;
         var x = GetKeyPressed();
         if (x === 0) {
@@ -797,12 +839,16 @@
             }
         }
         if (x === 2) { 
-            if (shape.i < 20 && board[shape.i + 1][shape.j] !== 4) {
+            if (shape.i < 19 && board[shape.i + 1][shape.j] !== 4) {
                 shape.i++;
             }
         }
         if (x === 3) {
-            if(shape.i==0 && shape.j==6){
+            if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
+                shape.i--;
+            }
+        }
+        if(shape.i==12 && shape.j==8){
                 if(board[shape.i][shape.j]==1){
                     score+=25;
                 }
@@ -838,19 +884,14 @@
                         score+=5;
                     }
                 }
-
                 board[shape.i][shape.j] = 10;
                 Draw();
                 b = true;
                 board[shape.i][shape.j] = 0;
                 shape.i=18;
                 shape.j=4;
-            }
-            else if (shape.i > 0 && board[shape.i - 1][shape.j] !== 4) {
-                shape.i--;
-            }
         }
-        if(shape.i==20 && shape.j==4){
+        if(shape.i==19 && shape.j==4){
                 if(board[shape.i][shape.j]==1){
                     score+=25;
                 }
@@ -890,8 +931,8 @@
                 board[shape.i][shape.j] = 10;
                 Draw();
                 board[shape.i][shape.j] = 0;
-                shape.i=0;
-                shape.j=6;
+                shape.i=13;
+                shape.j=8;
                 b = true;
             }
             
@@ -919,15 +960,7 @@
             monsterHit();
         } else if(b==false && (board[shape.i][shape.j] === 50 || board[shape.i][shape.j] === 51 || board[shape.i][shape.j] === 52 || board[shape.i][shape.j] === 53 )){
             if(board[shape.i][shape.j] > 50){
-                if(board[shape.i][shape.j]==51){
-                    score+=25;
-                }
-                else if(board[shape.i][shape.j]==52){
-                    score+=15;
-                }
-                else if(board[shape.i][shape.j]==53){
-                    score+=5;
-                }
+                
             }
             b=true;
             Time_monster_hit();
@@ -946,47 +979,52 @@
             b=true;
             Bonus_monster_hit();
         } else{
-            board[shape.i][shape.j] = 10;    
+            board[shape.i][shape.j] = 10;;  
         }
+      
         var currentTime = new Date();
         time_elapsed = gameTime + gameTimeBonus - (currentTime - start_time) / 1000;
         if(time_elapsed<5){
             timeOverSound.play();
         }
-        if (score >= 160 && (currentTime - start_time)/1000 <= 10) {
+        if (score >= 300 && (currentTime - start_time)/1000 <= 10) {
             pac_color = "green";
         }
         if (!gameOver && (number_of_eating1 === balls_number || time_elapsed<=0)) {
-            Draw();
-            gameOver = true;
-            playSound.stop();
-            if(score<50 && remain_life >= 0){
-                lostSound.play();
-                window.alert("You can do better");
+            if(score<800 && remain_life >= 0){
+                Draw();
+                gameOver = true;
+                playSound.stop();
+                lostSound.play();        
+                window.alert("You Lost!");   
                 window.clearInterval(interval);
                 window.clearInterval(interval_monsters);
                 window.clearInterval(interval_time_monster);
-                lostSound.stop();
+                window.clearInterval(interval_bonus_monster);
             }
             else{
-                winSound.play();
-                window.alert("We have a Winner!!!");
+                Draw();
+                gameOver = true;
+                winSound.play();        
+                playSound.stop();
+                window.alert("We have a Winner!!!");   
                 window.clearInterval(interval);
                 window.clearInterval(interval_monsters);
                 window.clearInterval(interval_time_monster);
-                winSound.stop();
+                window.clearInterval(interval_bonus_monster);
+
             }
         }
         else if(!gameOver && remain_life==0){
             Draw();
+            lostSound.play();    
             gameOver = true;
             playSound.stop();
-            lostSound.play();        
             window.alert("You Lost!");   
             window.clearInterval(interval);
             window.clearInterval(interval_monsters);
             window.clearInterval(interval_time_monster);
-            lostSound.stop(); 
+            window.clearInterval(interval_bonus_monster);
         }
         else {
             if(b==false)
@@ -1028,6 +1066,7 @@
         window.clearInterval(interval);
         window.clearInterval(interval_monsters);
         window.clearInterval(interval_time_monster);
+        window.clearInterval(interval_bonus_monster);
         gameOver=false;
         //stop all sounds.
         stopAllSounds();
@@ -1057,9 +1096,9 @@
                 monster.j=0;
             }
             else if(count_monsters === 1){
-                board[0][9]=12;
+                board[0][8]=12;
                 monster.i=0;
-                monster.j=9;
+                monster.j=8;
             }
             else if(count_monsters === 2){
                 board[19][0]=12;
@@ -1078,11 +1117,12 @@
     }
     }, false);
 
+    
     function changeLocationOfBonusMonster(){
         var distance_max = 0;
         var chosen_i = bonus_monster.i;
         var chosen_j = bonus_monster.j;
-        if(bonus_monster.j > 0 && board[bonus_monster.i][bonus_monster.j-1] != 4 && board[bonus_monster.i][bonus_monster.j-1]<12){
+        if(bonus_monster.j > 0 && board[bonus_monster.i][bonus_monster.j-1] != 4 && board[bonus_monster.i][bonus_monster.j-1]<12 && !(bonus_monster.i==18 && bonus_monster.j-1==4) && !(bonus_monster.i==12 && bonus_monster.j-1==8)){
             var distanceUp =  Math.sqrt( Math.pow(bonus_monster.i-shape.i,2) + Math.pow(bonus_monster.j-1-shape.j,2));
             if(distanceUp > distance_max){
                 distance_max = distanceUp;
@@ -1090,7 +1130,7 @@
                 chosen_j=bonus_monster.j-1;
             }
         } 
-        if(bonus_monster.j < 9 && board[bonus_monster.i][bonus_monster.j+1]!=4 && board[bonus_monster.i][bonus_monster.j+1] < 12){
+        if(bonus_monster.j < 8 && board[bonus_monster.i][bonus_monster.j+1]!=4 && board[bonus_monster.i][bonus_monster.j+1] < 12 && !(bonus_monster.i==18 && bonus_monster.j+1==4) && !(bonus_monster.i==12 && bonus_monster.j+1==8)){
             var distanceDown =  Math.sqrt( Math.pow(bonus_monster.i-shape.i,2) + Math.pow(bonus_monster.j+1-shape.j,2));
             if(distanceDown > distance_max){
                 distance_max = distanceDown;
@@ -1098,7 +1138,7 @@
                 chosen_j=bonus_monster.j+1;
             }
         }
-        if(bonus_monster.i > 0 && board[bonus_monster.i-1][bonus_monster.j]!=4 && board[bonus_monster.i-1][bonus_monster.j] < 12){
+        if(bonus_monster.i > 0 && board[bonus_monster.i-1][bonus_monster.j]!=4 && board[bonus_monster.i-1][bonus_monster.j] < 12 && !(bonus_monster.i-1==18 && bonus_monster.j==4) && !(bonus_monster.i-1==12 && bonus_monster.j==8)){
             var distanceLeft =  Math.sqrt( Math.pow(bonus_monster.i-1-shape.i,2) + Math.pow(bonus_monster.j-shape.j,2));
             if(distanceLeft > distance_max){
                 distance_max = distanceLeft;
@@ -1106,7 +1146,7 @@
                 chosen_j=bonus_monster.j;
             }
         }
-        if(bonus_monster.i < 19 && board[bonus_monster.i+1][bonus_monster.j]!=4 && board[bonus_monster.i+1][bonus_monster.j] < 12){
+        if(bonus_monster.i < 19 && board[bonus_monster.i+1][bonus_monster.j]!=4 && board[bonus_monster.i+1][bonus_monster.j] < 12 && !(bonus_monster.i+1==18 && bonus_monster.j==4) && !(bonus_monster.i+1  ==12 && bonus_monster.j==8)){
             var distanceRight =  Math.sqrt( Math.pow(bonus_monster.i+1-shape.i,2) + Math.pow(bonus_monster.j-shape.j,2));
             if(distanceRight > distance_max){
                 distance_max = distanceRight;
@@ -1125,7 +1165,7 @@
         var distance_max = 0;
         var chosen_i = time_monster.i;
         var chosen_j = time_monster.j;
-        if(time_monster.j > 0 && board[time_monster.i][time_monster.j-1] != 4 && board[time_monster.i][time_monster.j-1]<12){
+        if(time_monster.j > 0 && board[time_monster.i][time_monster.j-1] != 4 && board[time_monster.i][time_monster.j-1]<12 && !(time_monster.i==18 && time_monster.j-1==4) && !(time_monster.i==12 && time_monster.j-1==8)){
             var distanceUp =  Math.sqrt( Math.pow(time_monster.i-shape.i,2) + Math.pow(time_monster.j-1-shape.j,2));
             if(distanceUp > distance_max){
                 distance_max = distanceUp;
@@ -1133,7 +1173,7 @@
                 chosen_j=time_monster.j-1;
             }
         } 
-        if(time_monster.j < 9 && board[time_monster.i][time_monster.j+1]!=4 && board[time_monster.i][time_monster.j+1] < 12){
+        if(time_monster.j < 8 && board[time_monster.i][time_monster.j+1]!=4 && board[time_monster.i][time_monster.j+1] < 12  && !(time_monster.i==18 && time_monster.j+1==4) && !(time_monster.i==12 && time_monster.j+1==8)){
             var distanceDown =  Math.sqrt( Math.pow(time_monster.i-shape.i,2) + Math.pow(time_monster.j+1-shape.j,2));
             if(distanceDown > distance_max){
                 distance_max = distanceDown;
@@ -1141,7 +1181,7 @@
                 chosen_j=time_monster.j+1;
             }
         }
-        if(time_monster.i > 0 && board[time_monster.i-1][time_monster.j]!=4 && board[time_monster.i-1][time_monster.j] < 12){
+        if(time_monster.i > 0 && board[time_monster.i-1][time_monster.j]!=4 && board[time_monster.i-1][time_monster.j] < 12  && !(time_monster.i-1==18 && time_monster.j==4) && !(time_monster.i-1==12 && time_monster.j==8)){
             var distanceLeft =  Math.sqrt( Math.pow(time_monster.i-1-shape.i,2) + Math.pow(time_monster.j-shape.j,2));
             if(distanceLeft > distance_max){
                 distance_max = distanceLeft;
@@ -1149,7 +1189,7 @@
                 chosen_j=time_monster.j;
             }
         }
-        if(time_monster.i < 19 && board[time_monster.i+1][time_monster.j]!=4 && board[time_monster.i+1][time_monster.j] < 12){
+        if(time_monster.i < 19 && board[time_monster.i+1][time_monster.j]!=4 && board[time_monster.i+1][time_monster.j] < 12  && !(time_monster.i+1==18 && time_monster.j==4) && !(time_monster.i+1==12 && time_monster.j==8)){
             var distanceRight =  Math.sqrt( Math.pow(time_monster.i+1-shape.i,2) + Math.pow(time_monster.j-shape.j,2));
             if(distanceRight > distance_max){
                 distance_max = distanceRight;
@@ -1161,34 +1201,6 @@
         board[chosen_i][chosen_j]+=50;
         time_monster.i=chosen_i;
         time_monster.j=chosen_j;
-
-
-
-
-        // var moved = false;
-        // var lastLocation_i=time_monster.i;
-        // var lastLocation_j=time_monster.j;
-        // var randomNum = Math.random();
-        // if(randomNum<=0.25 && time_monster.i>0 && board[time_monster.i-1][time_monster.j]!=4 && board[time_monster.i-1][time_monster.j]<12){
-        //     time_monster.i--;
-        //     moved = true;
-        // }
-        // else if(randomNum>0.25 && randomNum<=0.50 && time_monster.i<9 && board[time_monster.i+1][time_monster.j]!=4 && board[time_monster.i+1][time_monster.j]<12){
-        //     time_monster.i++;
-        //     moved = true;
-        // }
-        // else if(randomNum>=0.5 && randomNum<=0.75 && time_monster.j>0 && board[time_monster.i][time_monster.j-1]!=4 && board[time_monster.i][time_monster.j-1]<12){
-        //     time_monster.j--;
-        //     moved = true;
-        // }
-        // else if(randomNum>= 0.75 && time_monster.j<0  && board[time_monster.i][time_monster.j+1]!=4 && board[time_monster.i][time_monster.j+1]<12){
-        //     time_monster.j++;
-        //     moved = true;
-        // }
-        // if(moved==true){
-        //     board[lastLocation_i][lastLocation_j]-=50;
-        //     board[time_monster.i][time_monster.j]+=50;
-        // }
     }
 
     function ChangeLocationsOfMonsters(){
@@ -1196,7 +1208,7 @@
             var distance_minimum = 10000;
             var chosen_i = monster.i;
             var chosen_j = monster.j;
-            if(monster.j > 0 && board[monster.i][monster.j-1] != 4 && board[monster.i][monster.j-1]<50){
+            if(monster.j > 0 && board[monster.i][monster.j-1] != 4 && board[monster.i][monster.j-1]<=10){
                 var distanceUp =  Math.sqrt( Math.pow(monster.i-shape.i,2) + Math.pow(monster.j-1-shape.j,2));
                 if(distanceUp < distance_minimum){
                     distance_minimum = distanceUp;
@@ -1204,7 +1216,7 @@
                     chosen_j=monster.j-1;
                 }
             } 
-            if(monster.j < 9 && board[monster.i][monster.j+1]!=4 && board[monster.i][monster.j+1] < 50){
+            if(monster.j < 8 && board[monster.i][monster.j+1]!=4 && board[monster.i][monster.j+1] <=10){
                 var distanceDown =  Math.sqrt( Math.pow(monster.i-shape.i,2) + Math.pow(monster.j+1-shape.j,2));
                 if(distanceDown < distance_minimum){
                     distance_minimum = distanceDown;
@@ -1212,7 +1224,7 @@
                     chosen_j=monster.j+1;
                 }
             }
-            if(monster.i > 0 && board[monster.i-1][monster.j]!=4 && board[monster.i-1][monster.j] < 50){
+            if(monster.i > 0 && board[monster.i-1][monster.j]!=4 && board[monster.i-1][monster.j] <=10){
                 var distanceLeft =  Math.sqrt( Math.pow(monster.i-1-shape.i,2) + Math.pow(monster.j-shape.j,2));
                 if(distanceLeft < distance_minimum){
                     distance_minimum = distanceLeft;
@@ -1220,7 +1232,7 @@
                     chosen_j=monster.j;
                 }
             }
-            if(monster.i < 19 && board[monster.i+1][monster.j]!=4 && board[monster.i+1][monster.j] < 50){
+            if(monster.i < 19 && board[monster.i+1][monster.j]!=4 && board[monster.i+1][monster.j] <=10){
                 var distanceRight =  Math.sqrt( Math.pow(monster.i+1-shape.i,2) + Math.pow(monster.j-shape.j,2));
                 if(distanceRight < distance_minimum){
                     distance_minimum = distanceRight;
@@ -1232,9 +1244,6 @@
             board[chosen_i][chosen_j]+=12;
             monster.i=chosen_i;
             monster.j=chosen_j;
-            // if(board[monster.i][monster.j] === board[shape.i][shape.j]){
-            //     monsterHit();
-            // }
         });
     }
 
@@ -1270,7 +1279,7 @@
         gameTimeBonus = 50;
         window.clearInterval(interval_time_monster);
     }
-
+    
     function Bonus_monster_hit(){
         score += 50;
         window.clearInterval(interval_bonus_monster);
