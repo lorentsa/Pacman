@@ -44,7 +44,7 @@
 	text-align: left;
 }
 
-.lbls{
+.lbls,.lblsSetting{
 	text-align: center;
 	background-color: lightsalmon;
 }
