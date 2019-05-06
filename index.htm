@@ -8,44 +8,62 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-        <!-- $.noConflict(); -->
 </head>
 
 <body>
 
 <div id="divMain">
-    <header>
-            <img src="pacman.png" id="pacman">
-            Wrote by: Loren Tsahalon & Niv Dudovitch
-            <h1 id="pacmanTitle" >Pacman</h1>
-    </header>
+        <header>
+                <table id="table_header">
+                    <tr>
+                        <td>
+                            <label style="color:lightsalmon; font-family: fantasy; font-size: 12px;">Wrote by:</label>
+                            <br>
+                            <label style="color:lightsalmon; font-family: fantasy;">Loren Tsahalon & Niv Dudovitch</label>
+                        </td>
+                        <td>
+                            <!-- <div id="hedaer_center">
+                                <h1 id="pacmanTitle" >Pacman</h1>
+                            </div>             -->
+                            <img src="pacmanTitle.png" id="pacmanTitle">
+                        </td>
+                        <td>
+                            <img src="pacman.png" id="pacman">
+                        </td>
+                    </tr>
+                </table>    
+            </header>
     <nav>
         <ul>
-            <li><a button="#welcome" onclick="ShowSection('welcome')">Welcome</a></li>
-            <li><a button="#log-in" onclick="ShowSection('log-in')">Log-in</a></li>
-            <li><a button="#sign-up" onclick="ShowSection('sign-up')">Sign-up</a></li>
-            <li><a button="#about" onclick="ShowDialog()">About</a></li>
+            <li><a button="#welcome" style="color:lightsalmon" onclick="ShowSection('welcome')" class="lefti">Welcome</a></li>
+            <li><a button="#log-in" style="color:lightsalmon" onclick="ShowSection('log-in')" class="lefti">Log-in</a></li>
+            <li><a button="#sign-up" style="color:lightsalmon" onclick="ShowSection('sign-up')" class="lefti">Sign-up</a></li>
+            <li><a button="#about" style="color:lightsalmon" onclick="ShowDialog()" class="lefti">About</a></li>
         </ul>
     </nav>
 
     <footer>
             <br>
-            created: 05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!
+            <label id="bb">05/05/2019 - This site contains the Pacman game in a special edition - ENJOY!></label> 
             <br>
-            contact with the website developers:
-            <br>
-            loren: lorentsa@post.bgu.ac.il | niv: nivdu@post.bgu.ac.il
+            <label id="bb"> with the website developers: </label>
+            <label id="bb">loren: lorentsa@post.bgu.ac.il | niv: nivdu@post.bgu.ac.il</label>
     </footer>
     
     <dialog id="about">
         <button onclick="CloseDialog()">X</button>
         <br>
-        Niv Dudovitch
-        <br>
-        Loren Tsahalon
+            Writers: Niv Dudovitch and Loren Tsahalon
+            <br>
+            We used the 'Validation' jQuery Plugin to validate user input fields.
+            <br>
+            The main problem we experienced during the work was to locate the divs and the various screen accessories.
+            <br>
+            we understood that sometimes using presentage instead of px its better!
+            </span>
     </dialog>
 
-    <div id="game" style="visibility: hidden;" class="screens">
+    <div id="game" style="visibility: hidden; background-color: gray;">
         <table id="table">
             <tr>
                 <td>
@@ -84,30 +102,33 @@
             </tr>
         </table>
         
-        <canvas id="canvas" height="540" width="1200"></canvas>
+        <canvas id="canvas" style="outline: black 5px solid;" height="420" width="926"></canvas>
 
     </div>
 
     <div id="welcome" style="visibility: visible;" class="screens">
-        <input type="button" value="log-in" onclick="ShowSection('log-in')">
-        <input type="button" value="sign-up" onclick="ShowSection('sign-up')">
+        <img src="tenor.gif" class="eatCityPacman">
+        <div id="inWelcome">
+            <input type="button" style="position:absolute; font-size: 65px; top:10%; right: 85%;" id="logIN" value="log-in" onclick="ShowSection('log-in')">
+            <input type="button" style="position:absolute; font-size: 65px; bottom: 10%; right: 80%;" id="signUP" value="sign-up" onclick="ShowSection('sign-up')">
+        </div>
         <br>
-        <img src="play.png" high="200px" width="500px">
+        <!-- <img src="play.png" high="200px" width="500px"> -->
     </div>
 
     <div id="sign-up" style="visibility: hidden;" class="screens">
         <form id = "sign_up_form" method = "get" action = "">
-        <h4>Username: </h4>
+        <h4 style="color:lightsalmon;">Username: </h4>
         <input id="uName" name="uName" type="text" class="check">
-        <h4>Password: </h4>
+        <h4 style="color:lightsalmon;">Password: </h4>
         <input id="pass" name="pass" type="password" class="check">
-        <h4>First Name: </h4>
+        <h4 style="color:lightsalmon;">First Name: </h4>
         <input id="fName" name="fName" type="text" class="check">
-        <h4>Last Name: </h4>
+        <h4 style="color:lightsalmon;">Last Name: </h4>
         <input id="lName" name="lName" type="text" class="check">
-        <h4>Email: </h4>
+        <h4 style="color:lightsalmon;">Email: </h4>
         <input id="mail" name="mail" type = "email" placeholder = "name@domain.com" class="check"> 
-        <h4>Birth Date: </h4>
+        <h4 style="color:lightsalmon;">Birth Date: </h4>
         <input id="bdate" name="bdate" type="date" class="check">
         
         <input type="submit" value="Submit">
@@ -115,10 +136,11 @@
     </div>
 
     <div id="log-in" style="visibility: hidden;" class="screens">
-        <h1>Username: </h1>
+            <!-- <img src="tenor1.gif" class="eatCityPacman"> -->
+        <h1 style="color:lightsalmon;">Username: </h1>
         <br>
         <input id="username" type="text" value="a" onclick="document.getElementById('username').value=''" class = "lbls">
-        <h1>Password: </h1>
+        <h1 style="color:lightsalmon;">Password: </h1>
         <br>
         <input id="passw" type="text" value="a" onclick="document.getElementById('passw').value=''" class = "lbls">
         <br>
@@ -129,6 +151,7 @@
     </div>
 
     <div id="setting" style="visibility: hidden;" class = "screens">
+            <!-- <img src="tenor1.gif" class="eatCityPacman"> -->
             
             <table id="Settingtable">
                     <tr>
@@ -166,40 +189,40 @@
                     </tr>
                     <tr>
                             <td>
-                            <h4>Number of balls: (between 50 to 90) </h4>
+                            <h4 style="color:darksalmon;">Number of balls: (between 50 to 90) </h4>
                             </td>
                             <td>
                             <input id="num_of_balls" type="text" value="-None-" onclick="document.getElementById('num_of_balls').value=''" class = "lblsSetting">
                             </td>
                             <td>
-                                    <h4>Color of 25 ball: </h4>
-                                    <select name="list" id="colorList25" >
-                                        <option value="red">red</option>
-                                        <option value="blue">blue</option>
-                                        <option value="black">black</option>
+                                    <h4 style="color:darksalmon;">Color of 25 ball: </h4>
+                                    <select name="list" id="colorList25"  style="background-color: darksalmon;">
+                                        <option value="red"  style="background-color: red; color:white;">red</option>
+                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
+                                        <option value="black"  style="background-color: black; color:white;">black</option>
                                     </select>
                                     </td>
                                     <td>
-                                    <h4>Color of 15 ball: </h4>
-                                    <select name="list" id="colorList15">
-                                        <option value="blue">blue</option>
-                                        <option value="red">red</option>
-                                        <option value="black">black</option>
+                                    <h4 style="color:darksalmon;">Color of 15 ball: </h4>
+                                    <select name="list" id="colorList15"  style="background-color: darksalmon;">
+                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
+                                        <option value="red"  style="background-color: red; color:white;">red</option>
+                                        <option value="black"  style="background-color: black; color:white;">black</option>
                                     </select>
                                 </td>
                                 <td>
-                                    <h4>Color of 5 ball: </h4>
-                                    <select name="list" id="colorList5">
-                                        <option value="black">black</option>
-                                        <option value="blue">blue</option>
-                                        <option value="red">red</option>
+                                    <h4 style="color:darksalmon;">Color of 5 ball: </h4>
+                                    <select name="list" id="colorList5"  style="background-color: darksalmon;">
+                                        <option value="black"  style="background-color: black; color:white;">black</option>
+                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
+                                        <option value="red"  style="background-color: red; color:white;">red</option>
                                     </select>
                                     
                             </td>
                     </tr>
                     <tr>
                         <td>
-                            <h4>Number of monsters: (1-3) </h4>
+                            <h4 style="color:darksalmon;">Number of monsters: (1-3) </h4>
                         </td>
                         <td>
                             <input id="num_of_monsters" type="text" value="-None-" onclick="document.getElementById('num_of_monsters').value=''" class = "lblsSetting"> 
@@ -208,7 +231,7 @@
                             </tr>
                             <tr>
                             <td>
-                            <h4>Game Time: </h4>
+                            <h4 style="color:darksalmon;">Game Time: </h4>
                         </td>
                         <td>
                             <input id="game_time" type="text" value="-None-" onclick="document.getElementById('game_time').value=''" class = "lblsSetting">
@@ -220,8 +243,8 @@
                         </td>
                         <td>
                             <input type="button" value="Done" onclick="CheckSettings(document.getElementById('num_of_balls').value,//document.getElementById('move_up').value,document.getElementById('move_down').value,document.getElementById('move_right').value,document.getElementById('move_left').value,
-                                        document.getElementById('colorList25').value,document.getElementById('colorList15').value,
-                                        document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
+                            document.getElementById('colorList25').value,document.getElementById('colorList15').value,
+                            document.getElementById('colorList5').value,document.getElementById('game_time').value,document.getElementById('num_of_monsters').value)">
                         </td>
                     </tr>
                 </table>
@@ -364,7 +387,6 @@
             submitHandler : function(form) {
                 AddUser(document.getElementById('uName').value,document.getElementById('pass').value,
                 document.getElementById('fName').value,document.getElementById('lName').value,document.getElementById('mail').value,document.getElementById('bdate').value);
-                //form.submit();
             },
 
         });    
@@ -430,7 +452,7 @@
         if(!validateFillFields('.lblsSetting')){
             window.alert("Fill all fields!")
         }
-        else if( is || game_time<0){
+        else if( !isnum || game_time<0){
             window.alert("game time must be positive number")
         }
         else if(!(/^\d+$/.test(num_monsters)) || num_monsters<1 || num_monsters>3){
@@ -674,23 +696,23 @@
         for (var i = 0; i < 20; i++) {
             for (var j = 0; j < 9; j++) {
                 var center = new Object();
-                center.x = i * 60 + 30;
-                center.y = j * 60 + 30;
+                center.x = i * 46 + 23;
+                center.y = j * 46 + 23;
                 if (board[i][j] === 10) {
                     context.beginPath();
                     if(move_direction === 0){//pacman move up
-                        context.arc(center.x, center.y, 30, -0.35 * Math.PI, 1.35 * Math.PI); // half circle    
+                        context.arc(center.x, center.y, 23, -0.35 * Math.PI, 1.35 * Math.PI); // half circle    
                     }
                     else if(move_direction === 1){//pacman move down
-                        context.arc(center.x, center.y, 30, 0.65 * Math.PI, 2.35 * Math.PI); // half circle    
+                        context.arc(center.x, center.y, 23, 0.65 * Math.PI, 2.35 * Math.PI); // half circle    
                     }
                     else if(move_direction === 2){//pacman move right
-                        context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle    
+                        context.arc(center.x, center.y, 23, 0.15 * Math.PI, 1.85 * Math.PI); // half circle    
                     }
                     else if(move_direction === 3){//pacman move left
-                        context.arc(center.x, center.y, 30, 1.15 * Math.PI, 2.85 * Math.PI); // half circle    
+                        context.arc(center.x, center.y, 23, 1.15 * Math.PI, 2.85 * Math.PI); // half circle    
                     }
-                    else context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle    
+                    else context.arc(center.x, center.y, 23, 0.15 * Math.PI, 1.85 * Math.PI); // half circle    
                     context.lineTo(center.x, center.y);
                     context.fillStyle = pac_color; //color
                     context.fill();
@@ -714,52 +736,62 @@
                     else if(i==19 && j==4){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
-                    var x=center.x-30;
-                    var y=center.y-30;
-                    teleport.style.height=60;
-                    teleport.style.width=60;
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    teleport.style.height=46;
+                    teleport.style.width=46;
                     context.drawImage(teleport,x,y);
                     } 
                     else if(i==12 && j==8){//if(shape.i==19 && shape.j==4){ 0,6
                     var teleport=new Image();
                     teleport.src="teleport.png";
-                    var x=center.x-30;
-                    var y=center.y-30;
-                    teleport.style.height=60;
-                    teleport.style.width=60;
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    teleport.style.height=46;
+                    teleport.style.width=46;
                     context.drawImage(teleport,x,y);
                     }
                     else if (board[i][j] === 1) {
                     food_counter++;
                     context.beginPath();
-                    context.arc(center.x, center.y, 8, 0, 2 * Math.PI); // circle
+                    context.arc(center.x, center.y, 9, 0, 2 * Math.PI); // circle
                     context.fillStyle = ball_25; //color
                     context.fill();
                 } else if (board[i][j] === 2) {
                     food_counter++;
                     context.beginPath();
-                    context.arc(center.x, center.y, 8, 0, 2 * Math.PI); // circle
+                    context.arc(center.x, center.y, 7.5, 0, 2 * Math.PI); // circle
                     context.fillStyle = ball_15; //color
                     context.fill();
                 } else if (board[i][j] === 3) {
                     food_counter++;
                     context.beginPath();
-                    context.arc(center.x, center.y, 8, 0, 2 * Math.PI); // circle
+                    context.arc(center.x, center.y, 6, 0, 2 * Math.PI); // circle
                     context.fillStyle = ball_5; //color
                     context.fill();
                 } else if (board[i][j] === 4) {
-                    context.beginPath();
-                    context.rect(center.x - 30, center.y - 30, 60, 60);
-                    context.fillStyle = "black"; //color
-                    context.fill();
+                    var wall=new Image();
+                    wall.src="walls.png";
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    wall.style.height=30;
+                    wall.style.width=30;
+                    context.drawImage(wall,x,y);
+                    if(board[i][j] > 12){
+                        food_counter++;
+                    }
+                    // context.beginPath();
+                    // context.rect(center.x - 23, center.y - 23, 46, 46);
+                    // context.fillStyle = "black"; //color
+                    // context.fill();
                 } else if(board[i][j] === 12 || board[i][j] === 13 || board[i][j] === 14 || board[i][j] === 15){
                     //draw monster
                     var ghost=new Image();
                     ghost.src="ghost.png";
-                    var x=center.x-30;
-                    var y=center.y-30;
-                    ghost.style.height=60;
-                    ghost.style.width=60;
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    ghost.style.height=30;
+                    ghost.style.width=30;
                     context.drawImage(ghost,x,y);
                     if(board[i][j] > 12){
                         food_counter++;
@@ -770,10 +802,10 @@
                     }
                     var timemonst=new Image();
                     timemonst.src="clock-removebg.png";
-                    var x=center.x-30;
-                    var y=center.y-30;
-                    timemonst.style.height=60;
-                    timemonst.style.width=60;
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    timemonst.style.height=30;
+                    timemonst.style.width=30;
                     context.drawImage(timemonst,x,y);
                 } else if(board[i][j] >= 100){
                     if(board[i][j] > 100){
@@ -781,10 +813,10 @@
                     }
                     var bonusmonst=new Image();
                     bonusmonst.src="bonus.png";
-                    var x=center.x-30;
-                    var y=center.y-30;
-                    bonusmonst.style.height=60;
-                    bonusmonst.style.width=60;
+                    var x=center.x-23;
+                    var y=center.y-23;
+                    bonusmonst.style.height=46;
+                    bonusmonst.style.width=46;
                     context.drawImage(bonusmonst,x,y);
                 }
             }
