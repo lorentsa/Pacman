@@ -197,9 +197,9 @@
                             <td>
                                     <h4 style="color:darksalmon;">Color of 25 ball: </h4>
                                     <select name="list" id="colorList25"  style="background-color: darksalmon;">
-                                        <option value="red"  style="background-color: red; color:white;">red</option>
-                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
                                         <option value="black"  style="background-color: black; color:white;">black</option>
+                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
+                                        <option value="red"  style="background-color: red; color:white;">red</option>
                                     </select>
                                     </td>
                                     <td>
@@ -213,9 +213,9 @@
                                 <td>
                                     <h4 style="color:darksalmon;">Color of 5 ball: </h4>
                                     <select name="list" id="colorList5"  style="background-color: darksalmon;">
-                                        <option value="black"  style="background-color: black; color:white;">black</option>
-                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
                                         <option value="red"  style="background-color: red; color:white;">red</option>
+                                        <option value="blue"  style="background-color: blue; color:white;">blue</option>
+                                        <option value="black"  style="background-color: black; color:white;">black</option>
                                     </select>
                                     
                             </td>
@@ -478,9 +478,9 @@
 
     function random(){
         this.gameTime = 30;
-        ball_25 = 'red';
+        ball_25 = 'black';
         ball_15 = 'green';
-        ball_5 = 'black';    
+        ball_5 = 'red';    
         c_up='ArrowUp';
         c_down='ArrowDown';
         c_right='ArrowRight';
@@ -552,11 +552,11 @@
         number_of_eating = 0;
         pac_color = "yellow";
         var food_remain = balls_number;
-        var food_25_remain = balls_number*0.6;
+        var food_25_remain = balls_number*0.1;
         food_25_remain = Math.floor(food_25_remain);
         var food_15_remain = balls_number*0.3;
         food_15_remain = Math.floor(food_15_remain);
-        var food_5_remain = balls_number*0.1;
+        var food_5_remain = balls_number*0.6;
         food_5_remain = Math.floor(food_5_remain);
         var pacman_remain = 1;
         var monsters_remain = number_Of_monsters;
@@ -1042,11 +1042,11 @@
         else{
             playSound.play();
         }
-        if (score >= 300 && (currentTime - start_time)/1000 <= 10) {
+        if (score >= 150 && (currentTime - start_time)/1000 <= 10) {
             pac_color = "green";
         }
         if (!gameOver && (number_of_eating1 === balls_number || time_elapsed<=0)) {
-            if(score<800 && remain_life >= 0){
+            if(score<500 && remain_life >= 0){
                 Draw();
                 gameOver = true;
                 playSound.stop();
